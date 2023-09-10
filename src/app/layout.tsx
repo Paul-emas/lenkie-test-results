@@ -2,6 +2,8 @@ import { ThemeProvider } from '@/components/theme-provider';
 import './globals.css';
 import type { Metadata } from 'next';
 import { DM_Sans } from 'next/font/google';
+import Topnav from '@/components/common/topnav';
+import Sidebar from '@/components/common/sidebar';
 
 const openSans = DM_Sans({
   subsets: ['latin'],

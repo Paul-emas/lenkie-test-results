@@ -4,6 +4,7 @@ import { SearchIcon } from 'lucide-react';
 import { Button } from '../ui/button';
 import SearchItem from '../ui/search-item';
 import Image from 'next/image';
+import { ScrollArea } from '../ui/scroll-area';
 
 const Searchbar: React.FC = () => {
   const [focused, setFocused] = useState(false);
@@ -22,7 +23,7 @@ const Searchbar: React.FC = () => {
     <div className="relative w-full">
       <form
         className={`${
-          showMenu ? 'shadow-soft rounded-t-md bg-primary' : 'rounded-md'
+          showMenu ? 'shadow-soft rounded-t-md bg-primary-foreground' : 'rounded-md bg-background'
         } flex h-12 w-full items-center border border-input bg-background focus-within:bg-primary-foreground`}
       >
         <div className="flex w-full items-center pl-4 pr-2">
@@ -33,7 +34,9 @@ const Searchbar: React.FC = () => {
             placeholder="Search for music"
             onFocus={onFocus}
             onBlur={onBlur}
-            className="mr-2 h-[70%] rounded-none border-transparent p-0 text-sm ring-0 ring-offset-0 focus-within:bg-primary-foreground focus-within:ring-offset-primary-foreground focus:border-transparent focus:ring-0 focus-visible:ring-0"
+            className={`${
+              showMenu ? 'bg-primary-foreground' : 'bg-background'
+            } mr-2 h-[70%] rounded-none border-transparent p-0 text-sm ring-0 ring-offset-0 focus-within:bg-primary-foreground focus-within:ring-offset-primary-foreground focus:border-transparent focus:ring-0 focus-visible:ring-0`}
             onChange={handleQueryChange}
           />
           <div className="mx-2">
@@ -61,11 +64,13 @@ const Searchbar: React.FC = () => {
           </div>
         </div>
         {showMenu ? (
-          <div className="absolute left-0 top-full w-full rounded-b-md border-b border-l border-r border-input bg-primary-foreground py-2">
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
+          <div className="absolute left-0 top-full max-h-[237px] w-full overflow-x-hidden rounded-b-md border-b border-l border-r border-input bg-primary-foreground py-2">
+            <ScrollArea>
+              <SearchItem />
+              <SearchItem />
+              <SearchItem />
+              <SearchItem />
+            </ScrollArea>
           </div>
         ) : null}
       </form>
