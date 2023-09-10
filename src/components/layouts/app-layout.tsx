@@ -11,7 +11,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
   return (
     <div className="min-h-screen w-full bg-background">
       <Topnav />
-      <div className="grid grid-cols-6">
+      <div className="flex w-full">
         <Sidebar
           playlists={[
             'Recently Added',
@@ -28,9 +28,9 @@ const AppLayout = ({ children }: AppLayoutProps) => {
             'Eminem Essentials'
           ]}
         />
-        <div className="relative col-span-5">
+        <div className="relative w-[calc(100%-250px)]">
           <Player />
-          <main className="container mx-auto px-20">{children}</main>
+          <main className="container mx-auto px-20 2xl:px-36">{children}</main>
         </div>
       </div>
     </div>

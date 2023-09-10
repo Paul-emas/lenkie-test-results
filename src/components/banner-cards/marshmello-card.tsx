@@ -16,7 +16,7 @@ const MarshmelloCard = () => {
               Marshmello
             </span>
           </div>
-          <Button size="lg" className="mt-6 h-12 font-bold uppercase">
+          <Button size="lg" variant="outline" className="mt-6 h-12 font-bold uppercase">
             <PlayCircleIcon className="mr-2" />
             <span>Listen now</span>
           </Button>

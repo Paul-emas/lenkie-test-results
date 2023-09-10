@@ -6,17 +6,17 @@ import Image from 'next/image';
 
 const Topnav = () => {
   return (
-    <header className="sticky top-0 z-20 grid h-16 w-full grid-cols-6 border-b border-input bg-background">
-      <div className="col-span-1 flex items-center pl-6">
+    <header className="sticky top-0 z-20 flex h-16 w-full items-center border-b border-input bg-background">
+      <div className="flex w-[250px] items-center pl-6">
         <Logo />
       </div>
-      <div className="col-span-5 flex items-center">
-        <div className="container mx-auto px-20">
+      <div className="flex w-[calc(100%-250px)] items-center">
+        <div className="container mx-auto px-20 2xl:px-36">
           <div className="grid grid-cols-2">
             <div className="col-span-1 flex items-center">
               <Searchbar />
             </div>
-            <div className="col-span-1  flex items-center justify-end gap-x-2">
+            <div className="col-span-1 flex items-center justify-end gap-x-3 2xl:absolute 2xl:right-6">
               <ModeToggle />
               <div className="flex items-center">
                 <div>
@@ -28,7 +28,6 @@ const Topnav = () => {
                     className="rounded-full border border-input"
                   />
                 </div>
-                <div></div>
               </div>
             </div>
           </div>

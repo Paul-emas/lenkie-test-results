@@ -11,9 +11,7 @@ interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const Sidebar = ({ className, playlists }: SidebarProps) => {
   return (
-    <aside
-      className={cn('sticky top-16 col-span-1 h-[calc(100vh-140px)] w-[250px] border-r border-input pb-12', className)}
-    >
+    <aside className={cn('sticky top-16 h-[calc(100vh-140px)] w-[250px] border-r border-input pb-12', className)}>
       <div className="space-y-4 py-4">
         <div className="px-3 py-2">
           <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">Discover</h2>
