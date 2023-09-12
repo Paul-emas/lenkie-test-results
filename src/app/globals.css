@@ -52,3 +52,7 @@
 body {
   background: var(--background);
 }
+
+.smooth-transition {
+  transition: 0.3s cubic-bezier(0.83, 0, 0.17, 1);
+}

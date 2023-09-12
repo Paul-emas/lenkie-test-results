@@ -1,22 +1,29 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { PlaylistItemType } from '@/types/shared';
 import { Button } from '../ui/button';
 import { ScrollArea } from '../ui/scroll-area';
+import { useAppSelector } from '@/lib/redux/hooks';
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
-  // playlists: PlaylistItemType[];
   playlists: string[];
 }
 
 const Sidebar = ({ className, playlists }: SidebarProps) => {
+  const { loading } = useAppSelector(state => state.track);
+  const { currentTrack } = useAppSelector(state => state.player);
+
   return (
-    <aside className={cn('sticky top-16 h-[calc(100vh-140px)] w-[250px] border-r border-input pb-12', className)}>
+    <aside
+      className={cn(
+        `${currentTrack ? 'h-[calc(100vh-140px)]' : 'h-full'} sticky top-16  w-[250px] border-r border-input pb-12`,
+        className
+      )}
+    >
       <div className="space-y-4 py-4">
         <div className="px-3 py-2">
           <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">Discover</h2>
           <div className="space-y-1">
-            <Button variant="secondary" className="w-full justify-start">
+            <Button disabled={loading} variant="secondary" className="w-full justify-start">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -32,7 +39,7 @@ const Sidebar = ({ className, playlists }: SidebarProps) => {
               </svg>
               Listen Now
             </Button>
-            <Button variant="ghost" className="w-full justify-start">
+            <Button disabled={loading} variant="ghost" className="w-full justify-start">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -50,7 +57,7 @@ const Sidebar = ({ className, playlists }: SidebarProps) => {
               </svg>
               Browse
             </Button>
-            <Button variant="ghost" className="w-full justify-start">
+            <Button disabled={loading} variant="ghost" className="w-full justify-start">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -74,7 +81,7 @@ const Sidebar = ({ className, playlists }: SidebarProps) => {
         <div className="px-3 py-2">
           <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">Library</h2>
           <div className="space-y-1">
-            <Button variant="ghost" className="w-full justify-start">
+            <Button disabled={loading} variant="ghost" className="w-full justify-start">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -93,7 +100,7 @@ const Sidebar = ({ className, playlists }: SidebarProps) => {
               </svg>
               Playlists
             </Button>
-            <Button variant="ghost" className="w-full justify-start">
+            <Button disabled={loading} variant="ghost" className="w-full justify-start">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -109,7 +116,7 @@ const Sidebar = ({ className, playlists }: SidebarProps) => {
               </svg>
               Songs
             </Button>
-            <Button variant="ghost" className="w-full justify-start">
+            <Button disabled={loading} variant="ghost" className="w-full justify-start">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -125,7 +132,7 @@ const Sidebar = ({ className, playlists }: SidebarProps) => {
               </svg>
               Made for You
             </Button>
-            <Button variant="ghost" className="w-full justify-start">
+            <Button disabled={loading} variant="ghost" className="w-full justify-start">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -141,7 +148,7 @@ const Sidebar = ({ className, playlists }: SidebarProps) => {
               </svg>
               Artists
             </Button>
-            <Button variant="ghost" className="w-full justify-start">
+            <Button disabled={loading} variant="ghost" className="w-full justify-start">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -166,7 +173,12 @@ const Sidebar = ({ className, playlists }: SidebarProps) => {
           <ScrollArea className="h-[182px] px-1">
             <div className="space-y-1 p-2">
               {playlists?.map((playlist, i) => (
-                <Button key={`${playlist}-${i}`} variant="ghost" className="w-full justify-start font-normal">
+                <Button
+                  disabled={loading}
+                  key={`${playlist}-${i}`}
+                  variant="ghost"
+                  className="w-full justify-start font-normal"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"

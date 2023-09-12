@@ -2,12 +2,15 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import { ChevronRight } from 'lucide-react';
 import { Button } from '../ui/button';
+import Link from 'next/link';
+import { ArtistType } from '@/types/shared';
 
 type SectionTitleProps = {
-  title: string;
-  caption: string;
-  buttonLabel?: string;
+  title: string | undefined;
+  caption: string | undefined;
+  buttonLabel?: string | undefined;
   viewMore?: boolean;
+  artist?: ArtistType | null;
   className?: string;
 };
 
@@ -15,14 +18,25 @@ const SectionTitle = ({
   title = '',
   caption = '',
   buttonLabel = '',
+  artist = null,
   viewMore = false,
   className = ''
 }: SectionTitleProps) => {
   return (
     <div className="flex items-center justify-between">
       <div className={cn(className)}>
-        <div className="text-xl font-bold">{title}</div>
-        <div className="text-sm font-light text-muted-foreground">{caption}</div>
+        <div className="text-xl font-bold capitalize">{title}</div>
+        <div className="text-sm font-light text-muted-foreground">
+          <span className="capitalize">{caption}</span>
+          {artist ? (
+            <>
+              ,{' '}
+              <Link href={`/artist/${artist?.id}`} className="hover:underline">
+                {artist.name}
+              </Link>
+            </>
+          ) : null}
+        </div>
       </div>
       {viewMore ? (
         <div>

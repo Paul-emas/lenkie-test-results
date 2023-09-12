@@ -1,30 +1,47 @@
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import React from 'react';
+import { Button } from './button';
+import { PlayIcon } from 'lucide-react';
+import { PlaylistItemType } from '@/types/shared';
+import usePlayMedia from '@/lib/hooks/usePlayMedia';
 
 type MusicItemProps = {
-  title: string;
-  caption: string;
-  imageUrl: string;
-  imageDesc: string;
+  data: PlaylistItemType;
+  tracks: PlaylistItemType[];
   className?: string;
 };
 
-const MusicItem = ({ title = '', caption = '', imageUrl = '', imageDesc = '', className = '' }: MusicItemProps) => {
+const MusicItem = ({ data, tracks = [], className = '' }: MusicItemProps) => {
+  const { play } = usePlayMedia();
+
   return (
-    <div className={cn('flex items-center', className)}>
-      <div>
+    <div className={cn('group flex items-center', className)}>
+      <div className="relative h-[50px] w-[50px] overflow-hidden rounded-sm">
+        <div className="invisible absolute inset-0 flex h-full w-full items-center justify-center rounded-sm bg-black bg-opacity-20 opacity-0 duration-200 group-hover:visible group-hover:opacity-100">
+          <Button
+            title="Play preview"
+            size="icon"
+            onClick={() => play({ data, tracks })}
+            className="smooth-transition scale-0 rounded-full bg-white hover:bg-gray-100 group-hover:scale-90"
+          >
+            <PlayIcon className="h-5 w-5 fill-black text-black" />
+          </Button>
+        </div>
         <Image
-          src={imageUrl}
+          src={data?.album.cover || ''}
           width={50}
           height={50}
-          alt={imageDesc}
-          className="bg rounded-sm object-cover object-left-top"
+          alt={data?.title || 'Music player image'}
+          className="rounded-sm bg-primary-foreground object-cover object-left-top"
         />
       </div>
       <div className="ml-4">
-        <div className="text-sm">{title}</div>
-        <div className="text-xs font-light text-muted-foreground">{caption}</div>
+        <div className="w-44 cursor-pointer truncate text-sm hover:underline">{data?.title_short}</div>
+        <div className="line-clamp-2 w-32 cursor-pointer truncate text-xs font-light text-accent-foreground hover:underline">
+          {data?.artist.name}
+        </div>
+        <div className="w-44 text-xs font-light text-muted-foreground">{data?.album.title}</div>
       </div>
     </div>
   );

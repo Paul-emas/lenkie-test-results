@@ -2,8 +2,10 @@ import { ThemeProvider } from '@/components/theme-provider';
 import './globals.css';
 import type { Metadata } from 'next';
 import { DM_Sans } from 'next/font/google';
+import Providers from '@/lib/redux/provider';
 
 const dmSans = DM_Sans({
+  display: 'swap',
   subsets: ['latin'],
   weight: ['100', '200', '300', '500', '600', '700', '800']
 });
@@ -18,7 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={dmSans.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {children}
+          <Providers>{children}</Providers>
         </ThemeProvider>
       </body>
     </html>
