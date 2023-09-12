@@ -53,6 +53,7 @@ export default function ArtistPage() {
   const [tracks, setTracks] = useState<PlaylistItemType[]>([]);
   const [albums, setAlbums] = useState<AlbumType | null>(null);
   const [showMore, setShowMore] = useState(false);
+  const atLeastFiveAlbums = albums && albums.tracks?.data.length > 5 ? true : false;
 
   useEffect(() => {
     if (params?.id) {
@@ -141,8 +142,8 @@ export default function ArtistPage() {
               ) : null}
 
               <div className="mt-12">
-                <SectionTitle title="Albums" caption="" buttonLabel="More" viewMore />
-                <div className="mt-6 flex justify-between gap-x-14">
+                <SectionTitle title="Albums" caption="" buttonLabel="More" viewMore={atLeastFiveAlbums} />
+                <div className={`${atLeastFiveAlbums ? 'justify-center' : ''} mt-6 flex gap-x-14`}>
                   {albums?.tracks.data
                     .slice(0, 5)
                     .map(data => <AlbumCard key={data.id} data={data} tracks={albums?.tracks.data} />)}
