@@ -31,9 +31,9 @@ const SearchItem: React.FC<SearchItemProps> = ({ data, tracks, setShowMenu, setQ
           title="Play preview"
           size="icon"
           onClick={handlePlay}
-          className="scale-75 rounded-full bg-white hover:bg-gray-100"
+          className="scale-75 rounded-full bg-primary dark:bg-white dark:hover:bg-gray-100"
         >
-          <PlayIcon className="h-5 w-5 fill-black text-black" />
+          <PlayIcon className="h-5 w-5 fill-white text-black dark:fill-black" />
         </Button>
       </div>
       <div className="ml-3 w-full text-left">

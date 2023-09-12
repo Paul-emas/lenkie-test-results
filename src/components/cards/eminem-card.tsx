@@ -25,9 +25,9 @@ const EminemWrldCard = () => {
         <h1 className="line-clamp-2 text-3xl font-bold">Best of Eminem</h1>
         <p className="mt-2 line-clamp-3 max-w-xs text-sm font-normal text-muted-foreground">
           Eminem, born Marshall Mathers III, is a celebrated American rapper, songwriter, and producer. Known for his
-          groundbreaking albums and lyrical prowess, he's a prominent figure in hip-hop, addressing personal and
-          societal issues in his music. Eminem's impact on the genre and openness about his struggles have made him an
-          iconic artist.
+          groundbreaking albums and lyrical prowess, he&apos;s a prominent figure in hip-hop, addressing personal and
+          societal issues in his music. Eminem&apos;s impact on the genre and openness about his struggles have made him
+          an iconic artist.
         </p>
         <div className="mt-6 flex items-center gap-x-4">
           <div>

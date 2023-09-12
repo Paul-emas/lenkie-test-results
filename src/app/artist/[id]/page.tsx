@@ -1,11 +1,12 @@
 'use client';
+import { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
+
 import ApiRequest from '@/api';
 import { AlbumCard } from '@/components/cards';
 import SectionTitle from '@/components/common/section-title';
 import AppLayout from '@/components/layouts/app-layout';
 import { Button } from '@/components/ui/button';
-import MusicItem from '@/components/ui/music-item';
-import { Skeleton } from '@/components/ui/skeleton';
 import TrackCard from '@/components/ui/track-card';
 import usePlayMedia from '@/lib/hooks/usePlayMedia';
 import { useAppDispatch, useAppSelector } from '@/lib/redux/hooks';
@@ -13,11 +14,9 @@ import { handleLoading } from '@/lib/redux/slices/trackSlice';
 import { AppDispatch } from '@/lib/redux/store';
 import { numberFormatter } from '@/lib/utils';
 import { AlbumType, ArtistType, PlaylistItemType } from '@/types/shared';
-import { PlayIcon } from 'lucide-react';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
 
-const fetchArtist = async (id: string, dispatch: AppDispatch) => {
+const fetchArtist = async (id: string | string[], dispatch: AppDispatch) => {
   try {
     dispatch(handleLoading(true));
     const response = await ApiRequest.get(`/artist/${id}`)({});
@@ -41,11 +40,12 @@ const fetchArtist = async (id: string, dispatch: AppDispatch) => {
       }
     }
   } catch (error) {
-    // Handle errors here
+    console.log(error);
   }
 };
 
-export default function ArtistPage({ params }) {
+export default function ArtistPage() {
+  const params = useParams();
   const dispatch = useAppDispatch();
   const { play } = usePlayMedia();
   const { loading } = useAppSelector(state => state.track);
@@ -55,7 +55,7 @@ export default function ArtistPage({ params }) {
   const [showMore, setShowMore] = useState(false);
 
   useEffect(() => {
-    if (params.id) {
+    if (params?.id) {
       (async () => {
         const data = await fetchArtist(params.id, dispatch);
         setArtistData(data?.artistData);
@@ -63,14 +63,13 @@ export default function ArtistPage({ params }) {
         setAlbums(data?.albums);
       })();
     }
-
     return () => {
       dispatch(handleLoading(true));
       setArtistData(null);
       setTracks([]);
       setAlbums(null);
     };
-  }, [params.id]);
+  }, [params?.id]);
 
   const handleShow = () => setShowMore(true);
 

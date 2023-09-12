@@ -28,7 +28,7 @@ const Player = () => {
   const [isLoadingMetadata, setIsLoadingMetadata] = useState(true);
 
   const repeat = useCallback(() => {
-    const currentTime = Math.round(audioRef?.current?.currentTime);
+    const currentTime = Math.round(audioRef?.current?.currentTime || 0);
     setCurrentTime(currentTime);
     setTimeProgress(currentTime);
     playAnimationRef.current = requestAnimationFrame(repeat);
@@ -36,9 +36,9 @@ const Player = () => {
 
   useEffect(() => {
     if (isPlaying) {
-      audioRef?.current.play();
+      audioRef?.current?.play();
     } else {
-      audioRef?.current.pause();
+      audioRef?.current?.pause();
     }
 
     playAnimationRef.current = requestAnimationFrame(repeat);
@@ -87,16 +87,17 @@ const Player = () => {
   const handlePlaying = () => dispatch(handleIsPlaying(!isPlaying));
 
   const handleProgressChange = (value: number[]) => {
-    dispatch(handleIsPlaying(true));
-    audioRef.current.currentTime = value[0];
-    setCurrentTime(value[0]);
+    if (audioRef?.current?.currentTime) {
+      audioRef.current.currentTime = value[0];
+      setCurrentTime(value[0]);
+    }
   };
 
   const onLoadedMetadata = () => {
     console.log('onLoadedMetadata');
     setIsLoadingMetadata(false);
-    const seconds = audioRef.current.duration;
-    setDuration(seconds);
+    const seconds = audioRef?.current?.duration;
+    setDuration(seconds || 0);
   };
 
   const handleVolumeChange = (value: number[]) => setVolume(value[0]);
