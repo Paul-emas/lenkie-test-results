@@ -2,6 +2,7 @@ import { AlbumType, PlaylistItemType, PlaylistType } from '@/types/shared';
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import {
   fetchFeaturedAlbums,
+  fetchEminemTracks,
   fetchMarshmelloTracks,
   fetchPopularPlaylistArtists,
   fetchRbTracks,
@@ -10,18 +11,22 @@ import {
 
 type initialStateTypes = {
   loading: boolean;
+  pageLoading: boolean;
   trendingPlaylists: PlaylistType | null;
   poularPlaylists: PlaylistItemType[];
   marshmellowPlaylists: PlaylistItemType[];
+  eminemPlaylists: PlaylistItemType[];
   rbPlaylists: PlaylistItemType[];
   featuredAlbums: AlbumType | null;
 };
 
 const initialState: initialStateTypes = {
   loading: true,
+  pageLoading: true,
   trendingPlaylists: null,
   marshmellowPlaylists: [],
   rbPlaylists: [],
+  eminemPlaylists: [],
   poularPlaylists: [],
   featuredAlbums: null
 };
@@ -29,13 +34,19 @@ const initialState: initialStateTypes = {
 const trackSlice = createSlice({
   name: 'tracks',
   initialState,
-  reducers: {},
+  reducers: {
+    handleLoading: (state, action) => void (state.loading = action.payload),
+    handlePageLoading: (state, action) => void (state.pageLoading = action.payload)
+  },
   extraReducers: builder => {
     builder.addCase(fetchMarshmelloTracks.fulfilled, (state, action) => {
       state.marshmellowPlaylists = action.payload;
     });
     builder.addCase(fetchRbTracks.fulfilled, (state, action) => {
       state.rbPlaylists = action.payload;
+    });
+    builder.addCase(fetchEminemTracks.fulfilled, (state, action) => {
+      state.eminemPlaylists = action.payload;
     });
     builder.addCase(fetchTrendingPlaylist.fulfilled, (state, action) => {
       state.trendingPlaylists = action.payload;
@@ -50,6 +61,7 @@ const trackSlice = createSlice({
       isAnyOf(
         fetchMarshmelloTracks.fulfilled,
         fetchTrendingPlaylist.fulfilled,
+        fetchEminemTracks.fulfilled,
         fetchRbTracks.fulfilled,
         fetchFeaturedAlbums.fulfilled,
         fetchPopularPlaylistArtists.fulfilled
@@ -60,5 +72,7 @@ const trackSlice = createSlice({
     );
   }
 });
+
+export const { handleLoading, handlePageLoading } = trackSlice.actions;
 
 export default trackSlice.reducer;

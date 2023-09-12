@@ -15,7 +15,7 @@ const Sidebar = ({ className, playlists }: SidebarProps) => {
   return (
     <aside
       className={cn(
-        `${currentTrack ? 'h-[calc(100vh-140px)]' : 'h-full'} sticky top-16  w-[250px] border-r border-input pb-12`,
+        `${currentTrack ? 'h-[calc(100vh-140px)]' : 'h-screen'} sticky top-16  w-[250px] border-r border-input pb-12`,
         className
       )}
     >

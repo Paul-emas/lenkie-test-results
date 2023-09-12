@@ -2,25 +2,32 @@ import React from 'react';
 import Image from 'next/image';
 import { Button } from '../ui/button';
 import { PlayCircleIcon, PlusIcon } from 'lucide-react';
+import { useAppSelector } from '@/lib/redux/hooks';
+import usePlayMedia from '@/lib/hooks/usePlayMedia';
 
-const JuiceWrldCard = () => {
+const EminemWrldCard = () => {
+  const { eminemPlaylists } = useAppSelector(state => state.track);
+  const { play } = usePlayMedia();
+
   return (
     <div className="col-span-2 mt-3 flex h-80 items-center justify-center rounded-lg border border-input bg-gradient-to-br from-primary-foreground via-primary-foreground to-gray-200 p-5 dark:to-gray-800">
       <div className="h-64 w-64 rounded-full">
         <div className="relative h-full w-full overflow-hidden rounded-md">
           <Image
-            src="https://e-cdns-images.dzcdn.net/images/artist/32458864045f1087652738e10bcdf74b/1000x1000-000000-80-0-0.jpg"
+            src={eminemPlaylists[0]?.artist.picture_big || ''}
             fill
             alt="profile image"
-            className="rounded-full object-cover object-left-top"
+            className="rounded-full bg-primary-foreground object-cover object-left-top"
           />
         </div>
       </div>
       <div className="ml-8 pr-8">
-        <h1 className="line-clamp-2 text-3xl font-bold">Best of JuiceWrld</h1>
+        <h1 className="line-clamp-2 text-3xl font-bold">Best of Eminem</h1>
         <p className="mt-2 line-clamp-3 max-w-xs text-sm font-normal text-muted-foreground">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nihil soluta quibusdam, est commodi eveniet minima,
-          dolorem voluptatum facere
+          Eminem, born Marshall Mathers III, is a celebrated American rapper, songwriter, and producer. Known for his
+          groundbreaking albums and lyrical prowess, he's a prominent figure in hip-hop, addressing personal and
+          societal issues in his music. Eminem's impact on the genre and openness about his struggles have made him an
+          iconic artist.
         </p>
         <div className="mt-6 flex items-center gap-x-4">
           <div>
@@ -30,7 +37,11 @@ const JuiceWrldCard = () => {
             </Button>
           </div>
           <div>
-            <Button className="h-11 pr-5 font-bold uppercase">
+            <Button
+              onClick={() => play({ data: eminemPlaylists[0], tracks: eminemPlaylists })}
+              title="Listen now"
+              className="h-11 pr-5 font-bold uppercase"
+            >
               <PlayCircleIcon className="mr-2 h-6 w-6" />
               <span>Listen now</span>
             </Button>
@@ -41,4 +52,4 @@ const JuiceWrldCard = () => {
   );
 };
 
-export default JuiceWrldCard;
+export default EminemWrldCard;

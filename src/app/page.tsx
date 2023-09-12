@@ -1,12 +1,17 @@
 'use client';
-
 import { useEffect, useState } from 'react';
+import { ArtistType } from '@/types/shared';
+import { useAppDispatch, useAppSelector } from '@/lib/redux/hooks';
+import {
+  fetchFeaturedAlbums,
+  fetchEminemTracks,
+  fetchMarshmelloTracks,
+  fetchPopularPlaylistArtists,
+  fetchRbTracks,
+  fetchTrendingPlaylist
+} from '@/lib/redux/services';
+import { MarshmelloCard, RbCard, AlbumCard, ArtistCard, EminemWrldCard, PopularTrackCard } from '@/components/cards';
 
-import { MarshmelloCard, RbCard } from '@/components/banner-cards';
-import { AlbumCard, ArtistCard, JuiceWrldCard, PopularTrackCard } from '@/components/cards';
-import SectionTitle from '@/components/common/section-title';
-import AppLayout from '@/components/layouts/app-layout';
-import MusicItem from '@/components/ui/music-item';
 import {
   AlbumCardSkeleton,
   ArtistCardSkeleton,
@@ -14,15 +19,11 @@ import {
   MusicItemSkeleton,
   SectionTitleSkeleton
 } from '@/components/loaders/skeleton';
-import {
-  fetchFeaturedAlbums,
-  fetchMarshmelloTracks,
-  fetchPopularPlaylistArtists,
-  fetchRbTracks,
-  fetchTrendingPlaylist
-} from '@/lib/redux/services';
-import { useAppDispatch, useAppSelector } from '@/lib/redux/hooks';
-import { ArtistType } from '@/types/shared';
+
+import SectionTitle from '@/components/common/section-title';
+import AppLayout from '@/components/layouts/app-layout';
+import MusicItem from '@/components/ui/music-item';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function Home() {
   const dispatch = useAppDispatch();
@@ -35,19 +36,18 @@ export default function Home() {
     dispatch(fetchRbTracks());
     dispatch(fetchFeaturedAlbums());
     dispatch(fetchPopularPlaylistArtists());
-  }, []);
+    dispatch(fetchEminemTracks());
+  }, [dispatch]);
 
   useEffect(() => {
     const artistArr = poularPlaylists?.map(track => track.artist);
     setArtist(
       artistArr.filter((artist, ind, arr) => {
-        // Check if the artist's name (case-insensitive) is not the same as the next artist's name
         return ind === arr.length - 1 || artist?.name.toLowerCase() !== arr[ind + 1]?.name.toLowerCase();
       })
     );
   }, [poularPlaylists]);
 
-  console.log(artists);
   return (
     <AppLayout>
       <div className="space-y-12 pb-28 pt-7">
@@ -69,18 +69,11 @@ export default function Home() {
             <>
               <SectionTitleSkeleton viewMore />
               <div className="mt-6 flex items-center justify-between">
-                <div className="space-y-4">
-                  <MusicItemSkeleton />
-                </div>
-                <div className="space-y-4">
-                  <MusicItemSkeleton />
-                </div>
-                <div className="space-y-4">
-                  <MusicItemSkeleton />
-                </div>
-                <div className="space-y-4">
-                  <MusicItemSkeleton />
-                </div>
+                {Array.from({ length: 4 }).map((_, index) => (
+                  <div className="space-y-4" key={index}>
+                    <MusicItemSkeleton />
+                  </div>
+                ))}
               </div>
             </>
           ) : (
@@ -91,7 +84,6 @@ export default function Home() {
                 buttonLabel="More"
                 viewMore
               />
-
               <div className="mt-6 justify-between">
                 <div className="flex flex-wrap items-center justify-between gap-y-4">
                   {trendingPlaylists?.tracks.data.map(data => (
@@ -107,11 +99,9 @@ export default function Home() {
             <>
               <SectionTitleSkeleton viewMore />
               <div className="mt-6 flex justify-between gap-x-7">
-                <ArtistCardSkeleton />
-                <ArtistCardSkeleton />
-                <ArtistCardSkeleton />
-                <ArtistCardSkeleton />
-                <ArtistCardSkeleton />
+                {Array.from({ length: 5 }).map((_, index) => (
+                  <ArtistCardSkeleton key={index} />
+                ))}
               </div>
             </>
           ) : (
@@ -132,20 +122,27 @@ export default function Home() {
         </div>
 
         <div className="grid grid-cols-3 gap-x-10">
-          <JuiceWrldCard />
-          <PopularTrackCard />
+          {loading ? (
+            <>
+              {Array.from({ length: 2 }).map((_, index) => (
+                <Skeleton key={index} className={index === 0 ? 'col-span-2 mt-3 h-80' : 'h-[345px]'} />
+              ))}
+            </>
+          ) : (
+            <>
+              <EminemWrldCard />
+              <PopularTrackCard />
+            </>
+          )}
         </div>
         <div className="my-7">
           {loading ? (
             <>
               <SectionTitleSkeleton viewMore />
               <div className="mt-6 flex justify-between gap-x-7">
-                <AlbumCardSkeleton />
-                <AlbumCardSkeleton />
-                <AlbumCardSkeleton />
-                <AlbumCardSkeleton />
-                <AlbumCardSkeleton />
-                <AlbumCardSkeleton />
+                {Array.from({ length: 6 }).map((_, index) => (
+                  <AlbumCardSkeleton key={index} />
+                ))}
               </div>
             </>
           ) : (

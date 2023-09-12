@@ -3,24 +3,19 @@ import { ScrollArea } from '../ui/scroll-area';
 import MusicItem from '../ui/music-item';
 import { ChevronRight } from 'lucide-react';
 import { Button } from '../ui/button';
+import { useAppSelector } from '@/lib/redux/hooks';
 
 const PopularTrackCard = () => {
+  const { eminemPlaylists } = useAppSelector(state => state.track);
+
   return (
     <div className="relative rounded-lg border border-input bg-background px-5 py-3">
-      <div className="text-lg font-bold">Popular Tracks</div>
-      <div className="text-sm font-light text-muted-foreground">Listen to your trending artists</div>
+      <div className="text-lg font-bold">Top hits by eminem</div>
+      <div className="text-sm font-light text-muted-foreground">Best from Eminem</div>
       <div className="group flex w-full items-center justify-between">
-        <ScrollArea className="h-[215px] w-full py-4">
-          <div className="space-y-4">
-            {[...Array(6)].map(id => (
-              <MusicItem
-                key={id}
-                title="Maroon 5"
-                caption="Maroon 5 Hello 2020"
-                imageUrl="/images/profile.jpg"
-                imageDesc="profile image"
-              />
-            ))}
+        <ScrollArea className="h-[218px] w-full py-4">
+          <div className="group space-y-4">
+            {eminemPlaylists?.map(data => <MusicItem key={data.id} data={data} tracks={eminemPlaylists} />)}
           </div>
         </ScrollArea>
         <div className="absolute -right-[84px] flex rotate-90 items-center text-sm font-light duration-300 group-hover:translate-y-5 group-hover:opacity-0">

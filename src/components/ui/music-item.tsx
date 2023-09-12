@@ -5,6 +5,7 @@ import { Button } from './button';
 import { PlayIcon } from 'lucide-react';
 import { PlaylistItemType } from '@/types/shared';
 import usePlayMedia from '@/lib/hooks/usePlayMedia';
+import Link from 'next/link';
 
 type MusicItemProps = {
   data: PlaylistItemType;
@@ -15,15 +16,17 @@ type MusicItemProps = {
 const MusicItem = ({ data, tracks = [], className = '' }: MusicItemProps) => {
   const { play } = usePlayMedia();
 
+  const handlePlay = () => play({ data, tracks });
+
   return (
-    <div className={cn('group flex items-center', className)}>
+    <div className={cn('group/music flex items-center', className)}>
       <div className="relative h-[50px] w-[50px] overflow-hidden rounded-sm">
-        <div className="invisible absolute inset-0 flex h-full w-full items-center justify-center rounded-sm bg-black bg-opacity-20 opacity-0 duration-200 group-hover:visible group-hover:opacity-100">
+        <div className="invisible absolute inset-0 flex h-full w-full items-center justify-center rounded-sm bg-black bg-opacity-20 opacity-0 duration-200 group-hover/music:visible group-hover/music:opacity-100">
           <Button
             title="Play preview"
             size="icon"
-            onClick={() => play({ data, tracks })}
-            className="smooth-transition scale-0 rounded-full bg-white hover:bg-gray-100 group-hover:scale-90"
+            onClick={handlePlay}
+            className="smooth-transition scale-0 rounded-full bg-white hover:bg-gray-100 group-hover/music:scale-90"
           >
             <PlayIcon className="h-5 w-5 fill-black text-black" />
           </Button>
@@ -37,10 +40,14 @@ const MusicItem = ({ data, tracks = [], className = '' }: MusicItemProps) => {
         />
       </div>
       <div className="ml-4">
-        <div className="w-44 cursor-pointer truncate text-sm hover:underline">{data?.title_short}</div>
-        <div className="line-clamp-2 w-32 cursor-pointer truncate text-xs font-light text-accent-foreground hover:underline">
-          {data?.artist.name}
+        <div onClick={handlePlay} className="w-44 cursor-pointer truncate text-sm">
+          {data?.title_short}
         </div>
+        <Link href={`/artist/${data?.artist.id}`}>
+          <div className="line-clamp-2 w-32 cursor-pointer truncate text-xs font-light text-accent-foreground hover:underline">
+            {data?.artist.name}
+          </div>
+        </Link>
         <div className="w-44 text-xs font-light text-muted-foreground">{data?.album.title}</div>
       </div>
     </div>

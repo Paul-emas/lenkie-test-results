@@ -31,6 +31,9 @@ export type ArtistType = {
   picture_xl: string;
   tracklist: string;
   type: string;
+  nb_album: number;
+  nb_fan: number;
+  radio: boolean;
 };
 
 export type PlaylistItemType = {

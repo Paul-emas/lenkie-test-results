@@ -5,6 +5,28 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export const numberFormatter = (num: number) => {
+  return num.toLocaleString('en-US', {
+    // add suffixes for thousands, millions, and billions
+    // the maximum number of decimal places to use
+    maximumFractionDigits: 2,
+    // specify the abbreviations to use for the suffixes
+    notation: 'compact',
+    compactDisplay: 'short'
+  });
+};
+
+export const formatTime = (time: number) => {
+  if (time && !isNaN(time)) {
+    const minutes = Math.floor(time / 60);
+    const formatMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
+    const seconds = Math.floor(time % 60);
+    const formatSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
+    return `${formatMinutes}:${formatSeconds}`;
+  }
+  return '00:00';
+};
+
 export const getBaseUrl = () => `${process.env.NEXT_PUBLIC_PROXY}/?${process.env.NEXT_PUBLIC_BASE_URL}`;
 
 export const getPath = (path: string = ''): string => (path ? `/${path}` : '');

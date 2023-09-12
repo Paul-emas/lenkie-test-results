@@ -25,9 +25,9 @@ const SectionTitle = ({
   return (
     <div className="flex items-center justify-between">
       <div className={cn(className)}>
-        <div className="text-xl font-bold capitalize">{title}</div>
+        <div className="text-xl font-bold normal-case	">{title}</div>
         <div className="text-sm font-light text-muted-foreground">
-          <span className="capitalize">{caption}</span>
+          <span className="normal-case	">{caption}</span>
           {artist ? (
             <>
               ,{' '}

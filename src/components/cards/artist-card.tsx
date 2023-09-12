@@ -33,8 +33,8 @@ const ArtistCard = ({ data }: ArtistCardProps) => {
         />
       </div>
       <div className="text-center">
-        <Link href="/">
-          <div className="mt-3 capitalize text-primary hover:underline">{data.name}</div>
+        <Link href={`/artist/${data.id}`}>
+          <div className="mt-3 normal-case text-primary hover:underline">{data.name}</div>
         </Link>
       </div>
     </div>

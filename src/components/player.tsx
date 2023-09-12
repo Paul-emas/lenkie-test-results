@@ -12,6 +12,8 @@ import {
 } from '@radix-ui/react-icons';
 import { handleCurrentTrack, handleIsPlaying } from '@/lib/redux/slices/playerSlice';
 import { useAppDispatch, useAppSelector } from '@/lib/redux/hooks';
+import { formatTime } from '@/lib/utils';
+import Link from 'next/link';
 
 const Player = () => {
   const dispatch = useAppDispatch();
@@ -26,7 +28,7 @@ const Player = () => {
   const [isLoadingMetadata, setIsLoadingMetadata] = useState(true);
 
   const repeat = useCallback(() => {
-    const currentTime = Math.round(audioRef.current.currentTime);
+    const currentTime = Math.round(audioRef?.current?.currentTime);
     setCurrentTime(currentTime);
     setTimeProgress(currentTime);
     playAnimationRef.current = requestAnimationFrame(repeat);
@@ -82,17 +84,6 @@ const Player = () => {
     }
   };
 
-  const formatTime = (time: number) => {
-    if (time && !isNaN(time)) {
-      const minutes = Math.floor(time / 60);
-      const formatMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
-      const seconds = Math.floor(time % 60);
-      const formatSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
-      return `${formatMinutes}:${formatSeconds}`;
-    }
-    return '00:00';
-  };
-
   const handlePlaying = () => dispatch(handleIsPlaying(!isPlaying));
 
   const handleProgressChange = (value: number[]) => {
@@ -114,7 +105,8 @@ const Player = () => {
 
   const handleShufflePlay = () => {
     dispatch(handleIsPlaying(true));
-    dispatch(handleCurrentTrack(tracks[Math.floor(Math.random() * tracks.length)]));
+    const randomTrack = tracks[Math.floor(Math.random() * tracks.length)];
+    dispatch(handleCurrentTrack(randomTrack));
   };
 
   return (
@@ -222,13 +214,17 @@ const Player = () => {
                         width={50}
                         height={50}
                         alt={currentTrack?.title || ''}
-                        className="rounded-sm object-cover object-left-top"
+                        className="rounded-sm bg-background object-cover object-left-top"
                       />
                     </div>
                     <div className="mx-3">
                       <div className="text-lg text-primary">{currentTrack?.title}</div>
                       <div className="-mt-0.5 flex items-center">
-                        <div className="text-sm font-light text-muted-foreground">{currentTrack?.artist.name}</div>
+                        <Link href={`/artist/${currentTrack?.artist.id}`}>
+                          <div className="text-sm font-light text-muted-foreground hover:underline">
+                            {currentTrack?.artist.name}
+                          </div>
+                        </Link>
                         <div>
                           <div className="mx-2 h-1 w-1 rounded-full bg-muted-foreground"></div>
                         </div>

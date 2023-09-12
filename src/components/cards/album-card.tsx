@@ -3,11 +3,10 @@ import Link from 'next/link';
 import React from 'react';
 import { Button } from '../ui/button';
 import { PlayIcon } from 'lucide-react';
-import { GenreType, PlaylistItemType } from '@/types/shared';
+import { PlaylistItemType } from '@/types/shared';
 import usePlayMedia from '@/lib/hooks/usePlayMedia';
 
 type AlbumCardProps = {
-  // genre: GenreType;
   data: PlaylistItemType;
   tracks: PlaylistItemType[];
 };
@@ -36,8 +35,8 @@ const AlbumCard = ({ data, tracks }: AlbumCardProps) => {
         />
       </div>
       <div className="text-left">
-        <Link href="/">
-          <div className="mt-3 line-clamp-1 text-sm font-semibold capitalize text-primary hover:underline">
+        <Link href={`/artist/${data.artist.id}`}>
+          <div className="mt-3 line-clamp-1 text-sm font-semibold normal-case text-primary hover:underline">
             {data?.title}
           </div>
         </Link>

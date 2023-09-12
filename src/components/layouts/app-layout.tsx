@@ -2,12 +2,22 @@ import React from 'react';
 import Topnav from '../common/topnav';
 import Sidebar from '../common/sidebar';
 import Player from '../player';
+import Logo from '../logo';
+import Image from 'next/image';
+import { useAppSelector } from '@/lib/redux/hooks';
+import PageLoader from '../loaders/page-loader';
 
 type AppLayoutProps = {
   children: React.ReactNode;
 };
 
 const AppLayout = ({ children }: AppLayoutProps) => {
+  const { pageLoading } = useAppSelector(state => state.track);
+
+  console.log(pageLoading);
+
+  if (pageLoading) return <PageLoader />;
+
   return (
     <div className="min-h-screen w-full bg-background">
       <Topnav />
