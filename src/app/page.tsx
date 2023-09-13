@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
-import { ArtistType } from '@/types/shared';
+import { ArtistType, PlaylistItemType } from '@/types/shared';
 import { useAppDispatch, useAppSelector } from '@/lib/redux/hooks';
 import {
   fetchFeaturedAlbums,
@@ -39,7 +39,8 @@ import Slider from '@/components/slider';
 export default function Home() {
   const dispatch = useAppDispatch();
   const { loading, trendingPlaylists, featuredAlbums, poularPlaylists } = useAppSelector(state => state.track);
-  const [artists, setArtist] = useState<ArtistType[]>([]);
+  const [artists, setArtists] = useState<ArtistType[]>([]);
+  const [albums, setAlbums] = useState<PlaylistItemType[]>([]);
   const artistSlideRef = useRef();
   const albumSlideRef = useRef();
   const trendingPlaylistsSlideRef = useRef();
@@ -56,12 +57,18 @@ export default function Home() {
 
   useEffect(() => {
     const artistArr = poularPlaylists?.map(track => track.artist);
-    setArtist(
+    if (featuredAlbums?.tracks.data)
+      setAlbums(
+        featuredAlbums?.tracks.data.filter((album: { title: string }, ind: number, arr: string | any[]) => {
+          return ind === arr.length - 1 || album?.title.toLowerCase() !== arr[ind + 1]?.title.toLowerCase();
+        })
+      );
+    setArtists(
       artistArr.filter((artist, ind, arr) => {
         return ind === arr.length - 1 || artist?.name.toLowerCase() !== arr[ind + 1]?.name.toLowerCase();
       })
     );
-  }, [poularPlaylists]);
+  }, [poularPlaylists, featuredAlbums]);
 
   return (
     <AppLayout>
@@ -115,21 +122,21 @@ export default function Home() {
                     <div className="flex flex-wrap items-center justify-between gap-y-4">
                       {trendingPlaylists?.tracks.data
                         .slice(0, 16)
-                        .map(data => <MusicItem data={data} tracks={trendingPlaylists?.tracks.data} />)}
+                        .map(data => <MusicItem key={data.id} data={data} tracks={trendingPlaylists?.tracks.data} />)}
                     </div>
                   </SwiperSlide>
                   <SwiperSlide>
                     <div className="flex flex-wrap items-center justify-between gap-y-4">
                       {trendingPlaylists?.tracks.data
                         .slice(16, 32)
-                        .map(data => <MusicItem data={data} tracks={trendingPlaylists?.tracks.data} />)}
+                        .map(data => <MusicItem key={data.id} data={data} tracks={trendingPlaylists?.tracks.data} />)}
                     </div>
                   </SwiperSlide>
                   <SwiperSlide>
                     <div className="flex flex-wrap items-center justify-between gap-y-4">
                       {trendingPlaylists?.tracks.data
                         .slice(32, 48)
-                        .map(data => <MusicItem data={data} tracks={trendingPlaylists?.tracks.data} />)}
+                        .map(data => <MusicItem key={data.id} data={data} tracks={trendingPlaylists?.tracks.data} />)}
                     </div>
                   </SwiperSlide>
                 </Slider>
@@ -196,18 +203,17 @@ export default function Home() {
           ) : (
             <>
               <SectionTitle
-                title={featuredAlbums?.title}
-                caption={featuredAlbums?.label}
-                artist={featuredAlbums?.artist}
-                swiperRef={albumSlideRef}
+                title="Relaxing Lofi music"
+                caption="Lofi music relaxes your mind"
                 buttonLabel="More"
+                swiperRef={albumSlideRef}
                 viewMore
               />
               <div className="mt-6 flex justify-between gap-x-7">
                 <Slider swiperRef={albumSlideRef} slidesPerView={6} spaceBetween={28}>
-                  {featuredAlbums?.tracks.data.map(data => (
+                  {albums.map(data => (
                     <SwiperSlide key={data.id}>
-                      <AlbumCard data={data} tracks={featuredAlbums?.tracks.data} />
+                      <AlbumCard data={data} tracks={albums} />
                     </SwiperSlide>
                   ))}
                 </Slider>

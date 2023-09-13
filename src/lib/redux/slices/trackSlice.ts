@@ -19,7 +19,7 @@ type initialStateTypes = {
   jobBellionPlaylists: PlaylistItemType[];
   eminemPlaylists: PlaylistItemType[];
   rbPlaylists: PlaylistItemType[];
-  featuredAlbums: AlbumType | null;
+  featuredAlbums: PlaylistType | null;
 };
 
 const initialState: initialStateTypes = {

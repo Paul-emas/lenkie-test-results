@@ -26,14 +26,14 @@ const fetchTrendingPlaylist = createAsyncThunk('tracks', async () => {
   return response.data;
 });
 
+const fetchFeaturedAlbums = createAsyncThunk('album', async () => {
+  const response = await ApiRequest.get('/playlist/9817140982')({});
+  return response.data;
+});
+
 const fetchPopularPlaylistArtists = createAsyncThunk('popular', async () => {
   const response = await ApiRequest.get('/search?q=trap')({});
   return response.data.data;
-});
-
-const fetchFeaturedAlbums = createAsyncThunk('album', async () => {
-  const response = await ApiRequest.get('/album/430179317?limit=6')({});
-  return response.data;
 });
 
 export {

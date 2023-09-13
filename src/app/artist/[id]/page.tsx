@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'next/navigation';
 
 import ApiRequest from '@/api';
@@ -15,10 +15,11 @@ import { AppDispatch } from '@/lib/redux/store';
 import { numberFormatter } from '@/lib/utils';
 import { AlbumType, ArtistType, PlaylistItemType } from '@/types/shared';
 import Image from 'next/image';
+import Slider from '@/components/slider';
+import { SwiperSlide } from 'swiper/react';
 
 const fetchArtist = async (id: string | string[], dispatch: AppDispatch) => {
   try {
-    dispatch(handleLoading(true));
     const response = await ApiRequest.get(`/artist/${id}`)({});
     if (response.status === 200) {
       const artistData = response.data;
@@ -26,16 +27,17 @@ const fetchArtist = async (id: string | string[], dispatch: AppDispatch) => {
       if (artistData.tracklist) {
         const tracksResponse = await ApiRequest.get(`${process.env.NEXT_PUBLIC_PROXY}/?${artistData.tracklist}`)({});
         if (tracksResponse.status === 200) {
+          dispatch(handleLoading(false));
           if (tracksResponse.data.data.length > 0) {
-            const albumsResponse = await ApiRequest.get(`/album/${tracksResponse.data.data[0].album.id}`)({});
-
-            if (albumsResponse.status !== 200) {
-              return;
-            } else {
-              dispatch(handleLoading(false));
-              return { artistData, tracks: tracksResponse.data.data, albums: albumsResponse.data };
-            }
+            const albums = tracksResponse.data.data.filter(
+              (album: { title: string }, ind: number, arr: string | any[]) => {
+                return ind === arr.length - 1 || album?.title.toLowerCase() !== arr[ind + 1]?.title.toLowerCase();
+              }
+            );
+            return { artistData, tracks: tracksResponse.data.data, albums: albums };
           }
+        } else {
+          return;
         }
       }
     }
@@ -51,13 +53,17 @@ export default function ArtistPage() {
   const { loading } = useAppSelector(state => state.track);
   const [artistData, setArtistData] = useState<ArtistType | null>(null);
   const [tracks, setTracks] = useState<PlaylistItemType[]>([]);
-  const [albums, setAlbums] = useState<AlbumType | null>(null);
+  const [albums, setAlbums] = useState<PlaylistItemType[]>([]);
   const [showMore, setShowMore] = useState(false);
-  const atLeastFiveAlbums = albums && albums.tracks?.data.length > 5 ? true : false;
+  const atLeastFiveAlbums = albums && albums.length > 5 ? true : false;
+  const albumSlideRef = useRef();
+
+  console.log(loading);
 
   useEffect(() => {
     if (params?.id) {
       (async () => {
+        dispatch(handleLoading(true));
         const data = await fetchArtist(params.id, dispatch);
         setArtistData(data?.artistData);
         setTracks(data?.tracks);
@@ -68,7 +74,7 @@ export default function ArtistPage() {
       dispatch(handleLoading(true));
       setArtistData(null);
       setTracks([]);
-      setAlbums(null);
+      setAlbums([]);
     };
   }, [params?.id]);
 
@@ -81,7 +87,7 @@ export default function ArtistPage() {
 
   return (
     <AppLayout>
-      {loading && !artistData && !tracks?.length && !albums ? (
+      {loading ? (
         <div className="mt-40">
           <div className="mt-4 rounded-3xl border border-input bg-primary-foreground pb-[400px]">
             <div className="relative -top-28">
@@ -141,14 +147,26 @@ export default function ArtistPage() {
                 </Button>
               ) : null}
 
-              <div className="mt-12">
-                <SectionTitle title="Albums" caption="" buttonLabel="More" viewMore={atLeastFiveAlbums} />
-                <div className={`${atLeastFiveAlbums ? 'justify-center' : ''} mt-6 flex gap-x-14`}>
-                  {albums?.tracks.data
-                    .slice(0, 5)
-                    .map(data => <AlbumCard key={data.id} data={data} tracks={albums?.tracks.data} />)}
+              {albums.length > 0 ? (
+                <div className="mt-12">
+                  <SectionTitle
+                    title="Albums"
+                    caption=""
+                    buttonLabel="More"
+                    viewMore={atLeastFiveAlbums}
+                    swiperRef={albumSlideRef}
+                  />
+                  <div className="mt-6">
+                    <Slider swiperRef={albumSlideRef} slidesPerView={6} spaceBetween={28}>
+                      {albums?.map(data => (
+                        <SwiperSlide key={data.id}>
+                          <AlbumCard data={data} tracks={albums} />
+                        </SwiperSlide>
+                      ))}
+                    </Slider>
+                  </div>
                 </div>
-              </div>
+              ) : null}
             </div>
           </div>
         </div>

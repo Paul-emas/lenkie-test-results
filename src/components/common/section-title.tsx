@@ -7,9 +7,9 @@ import { ArtistType } from '@/types/shared';
 import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons';
 
 type SectionTitleProps = {
-  title: string | undefined;
-  caption: string | undefined;
-  buttonLabel?: string | undefined;
+  title?: string;
+  caption?: string;
+  buttonLabel?: string;
   viewMore?: boolean;
   artist?: ArtistType | null;
   className?: string;
