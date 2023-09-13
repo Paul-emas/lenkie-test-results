@@ -58,8 +58,6 @@ export default function ArtistPage() {
   const atLeastFiveAlbums = albums && albums.length > 5 ? true : false;
   const albumSlideRef = useRef();
 
-  console.log(loading);
-
   useEffect(() => {
     if (params?.id) {
       (async () => {
@@ -149,13 +147,7 @@ export default function ArtistPage() {
 
               {albums.length > 0 ? (
                 <div className="mt-12">
-                  <SectionTitle
-                    title="Albums"
-                    caption=""
-                    buttonLabel="More"
-                    viewMore={atLeastFiveAlbums}
-                    swiperRef={albumSlideRef}
-                  />
+                  <SectionTitle title="Albums" caption="" swiperRef={albumSlideRef} />
                   <div className="mt-6">
                     <Slider swiperRef={albumSlideRef} slidesPerView={6} spaceBetween={28}>
                       {albums?.map(data => (

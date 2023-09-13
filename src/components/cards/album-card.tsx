@@ -31,12 +31,12 @@ const AlbumCard = ({ data, tracks }: AlbumCardProps) => {
           src={data?.album.cover_xl || ''}
           fill
           alt={data?.title || 'Music player image'}
-          className="object-cover object-left-top"
+          className="bg-primary-foreground object-cover object-left-top"
         />
       </div>
       <div className="text-left">
         <Link href={`/artist/${data.artist.id}`}>
-          <div className="mt-3 line-clamp-1 text-sm font-semibold normal-case text-primary hover:underline">
+          <div className="mt-3 line-clamp-1 text-sm font-semibold capitalize text-primary hover:underline">
             {data?.title}
           </div>
         </Link>
