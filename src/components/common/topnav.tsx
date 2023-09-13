@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 const Topnav = () => {
   return (
-    <header className="sticky top-0 z-20 flex h-16 w-full items-center border-b border-input bg-background">
+    <header className="sticky top-0 z-20 flex h-16 w-full items-center overflow-hidden border-b border-input bg-background">
       <div className="flex w-[250px] items-center pl-6">
         <Logo />
       </div>
