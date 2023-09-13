@@ -34,7 +34,7 @@ const ArtistCard = ({ data }: ArtistCardProps) => {
       </div>
       <div className="text-center">
         <Link href={`/artist/${data.id}`}>
-          <div className="mt-3 normal-case text-primary hover:underline">{data.name}</div>
+          <div className="mt-3 line-clamp-1 normal-case text-primary hover:underline">{data.name}</div>
         </Link>
       </div>
     </div>

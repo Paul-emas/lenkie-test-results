@@ -40,9 +40,9 @@ const EminemWrldCard = () => {
             <Button
               onClick={() => play({ data: eminemPlaylists[0], tracks: eminemPlaylists })}
               title="Listen now"
-              className="h-11 pr-5 font-bold uppercase"
+              className="h-[44px] pr-5 font-bold uppercase"
             >
-              <PlayCircleIcon className="mr-2 h-5 w-5" />
+              <PlayCircleIcon className="mr-2 h-6 w-6" />
               <span>Listen now</span>
             </Button>
           </div>
