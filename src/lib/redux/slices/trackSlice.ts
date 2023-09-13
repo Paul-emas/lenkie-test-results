@@ -6,7 +6,8 @@ import {
   fetchMarshmelloTracks,
   fetchPopularPlaylistArtists,
   fetchRbTracks,
-  fetchTrendingPlaylist
+  fetchTrendingPlaylist,
+  fetchJonBellionTracks
 } from '../services';
 
 type initialStateTypes = {
@@ -15,6 +16,7 @@ type initialStateTypes = {
   trendingPlaylists: PlaylistType | null;
   poularPlaylists: PlaylistItemType[];
   marshmellowPlaylists: PlaylistItemType[];
+  jobBellionPlaylists: PlaylistItemType[];
   eminemPlaylists: PlaylistItemType[];
   rbPlaylists: PlaylistItemType[];
   featuredAlbums: AlbumType | null;
@@ -27,6 +29,7 @@ const initialState: initialStateTypes = {
   marshmellowPlaylists: [],
   rbPlaylists: [],
   eminemPlaylists: [],
+  jobBellionPlaylists: [],
   poularPlaylists: [],
   featuredAlbums: null
 };
@@ -48,6 +51,9 @@ const trackSlice = createSlice({
     builder.addCase(fetchEminemTracks.fulfilled, (state, action) => {
       state.eminemPlaylists = action.payload;
     });
+    builder.addCase(fetchJonBellionTracks.fulfilled, (state, action) => {
+      state.jobBellionPlaylists = action.payload;
+    });
     builder.addCase(fetchTrendingPlaylist.fulfilled, (state, action) => {
       state.trendingPlaylists = action.payload;
     });
@@ -63,6 +69,7 @@ const trackSlice = createSlice({
         fetchTrendingPlaylist.fulfilled,
         fetchEminemTracks.fulfilled,
         fetchRbTracks.fulfilled,
+        fetchJonBellionTracks.fulfilled,
         fetchFeaturedAlbums.fulfilled,
         fetchPopularPlaylistArtists.fulfilled
       ),

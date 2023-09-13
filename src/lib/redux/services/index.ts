@@ -6,27 +6,32 @@ const fetchMarshmelloTracks = createAsyncThunk('marshmello', async thunkApi => {
   return response.data.data;
 });
 
-const fetchRbTracks = createAsyncThunk('r&b', async thunkApi => {
-  const response = await ApiRequest.get('/artist/535490/top?limit=50')({});
+const fetchJonBellionTracks = createAsyncThunk('bellion', async thunkApi => {
+  const response = await ApiRequest.get('/artist/5340439/top?limit=50')({});
   return response.data.data;
 });
 
-const fetchEminemTracks = createAsyncThunk('wrld', async thunkApi => {
+const fetchRbTracks = createAsyncThunk('r&b', async () => {
+  const response = await ApiRequest.get('/playlist/1036183001/tracks')({});
+  return response.data.data;
+});
+
+const fetchEminemTracks = createAsyncThunk('eminem', async () => {
   const response = await ApiRequest.get('/search?q=eminem')({});
   return response.data.data;
 });
 
-const fetchTrendingPlaylist = createAsyncThunk('tracks', async thunkApi => {
-  const response = await ApiRequest.get('/playlist/6237312204?limit=16')({});
+const fetchTrendingPlaylist = createAsyncThunk('tracks', async () => {
+  const response = await ApiRequest.get('/playlist/6237312204')({});
   return response.data;
 });
 
-const fetchPopularPlaylistArtists = createAsyncThunk('popular', async thunkApi => {
+const fetchPopularPlaylistArtists = createAsyncThunk('popular', async () => {
   const response = await ApiRequest.get('/search?q=trap')({});
   return response.data.data;
 });
 
-const fetchFeaturedAlbums = createAsyncThunk('album', async thunkApi => {
+const fetchFeaturedAlbums = createAsyncThunk('album', async () => {
   const response = await ApiRequest.get('/album/430179317?limit=6')({});
   return response.data;
 });
@@ -37,5 +42,6 @@ export {
   fetchMarshmelloTracks,
   fetchPopularPlaylistArtists,
   fetchRbTracks,
-  fetchTrendingPlaylist
+  fetchTrendingPlaylist,
+  fetchJonBellionTracks
 };

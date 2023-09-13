@@ -48,7 +48,7 @@ const MusicItem = ({ data, tracks = [], className = '' }: MusicItemProps) => {
             {data?.artist.name}
           </div>
         </Link>
-        <div className="w-44 text-xs font-light text-muted-foreground">{data?.album.title}</div>
+        <div className="line-clamp-1 w-44 text-xs font-light text-muted-foreground">{data?.album.title}</div>
       </div>
     </div>
   );

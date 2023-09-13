@@ -42,7 +42,7 @@ const EminemWrldCard = () => {
               title="Listen now"
               className="h-11 pr-5 font-bold uppercase"
             >
-              <PlayCircleIcon className="mr-2 h-6 w-6" />
+              <PlayCircleIcon className="mr-2 h-5 w-5" />
               <span>Listen now</span>
             </Button>
           </div>

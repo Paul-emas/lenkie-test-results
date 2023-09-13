@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ArtistType } from '@/types/shared';
 import { useAppDispatch, useAppSelector } from '@/lib/redux/hooks';
 import {
@@ -8,9 +8,18 @@ import {
   fetchMarshmelloTracks,
   fetchPopularPlaylistArtists,
   fetchRbTracks,
-  fetchTrendingPlaylist
+  fetchTrendingPlaylist,
+  fetchJonBellionTracks
 } from '@/lib/redux/services';
-import { MarshmelloCard, RbCard, AlbumCard, ArtistCard, EminemWrldCard, PopularTrackCard } from '@/components/cards';
+import {
+  MarshmelloCard,
+  RbCard,
+  AlbumCard,
+  ArtistCard,
+  EminemWrldCard,
+  PopularTrackCard,
+  JobBellionCard
+} from '@/components/cards';
 
 import {
   AlbumCardSkeleton,
@@ -24,11 +33,16 @@ import SectionTitle from '@/components/common/section-title';
 import AppLayout from '@/components/layouts/app-layout';
 import MusicItem from '@/components/ui/music-item';
 import { Skeleton } from '@/components/ui/skeleton';
+import { SwiperSlide } from 'swiper/react';
+import Slider from '@/components/slider';
 
 export default function Home() {
   const dispatch = useAppDispatch();
   const { loading, trendingPlaylists, featuredAlbums, poularPlaylists } = useAppSelector(state => state.track);
   const [artists, setArtist] = useState<ArtistType[]>([]);
+  const artistSlideRef = useRef();
+  const albumSlideRef = useRef();
+  const trendingPlaylistsSlideRef = useRef();
 
   useEffect(() => {
     dispatch(fetchTrendingPlaylist());
@@ -37,6 +51,7 @@ export default function Home() {
     dispatch(fetchFeaturedAlbums());
     dispatch(fetchPopularPlaylistArtists());
     dispatch(fetchEminemTracks());
+    dispatch(fetchJonBellionTracks());
   }, [dispatch]);
 
   useEffect(() => {
@@ -51,19 +66,28 @@ export default function Home() {
   return (
     <AppLayout>
       <div className="space-y-12 pb-28 pt-7">
-        <div className="grid grid-cols-2 gap-x-7">
-          {loading ? (
-            <>
-              <BannerSkeleton />
-              <BannerSkeleton />
-            </>
-          ) : (
-            <>
-              <MarshmelloCard />
-              <RbCard />
-            </>
-          )}
-        </div>
+        {loading ? (
+          <div className="flex gap-x-7">
+            <BannerSkeleton />
+            <BannerSkeleton />
+            <Skeleton className="h-52 w-40 rounded-l-sm rounded-r-none" />
+          </div>
+        ) : (
+          <div className="col-span-2 w-full">
+            <Slider slidesPerView={2.3} spaceBetween={28} autoplay>
+              <SwiperSlide>
+                <MarshmelloCard />
+              </SwiperSlide>
+              <SwiperSlide>
+                <RbCard />
+              </SwiperSlide>
+              <SwiperSlide>
+                <JobBellionCard />
+              </SwiperSlide>
+            </Slider>
+          </div>
+        )}
+
         <div className="my-7">
           {loading ? (
             <>
@@ -81,15 +105,34 @@ export default function Home() {
               <SectionTitle
                 title={trendingPlaylists?.title}
                 caption={trendingPlaylists?.description}
+                swiperRef={trendingPlaylistsSlideRef}
                 buttonLabel="More"
                 viewMore
               />
               <div className="mt-6 justify-between">
-                <div className="flex flex-wrap items-center justify-between gap-y-4">
-                  {trendingPlaylists?.tracks.data.map(data => (
-                    <MusicItem key={data.id} data={data} tracks={trendingPlaylists?.tracks.data} />
-                  ))}
-                </div>
+                <Slider swiperRef={trendingPlaylistsSlideRef} slidesPerView={1}>
+                  <SwiperSlide>
+                    <div className="flex flex-wrap items-center justify-between gap-y-4">
+                      {trendingPlaylists?.tracks.data
+                        .slice(0, 16)
+                        .map(data => <MusicItem data={data} tracks={trendingPlaylists?.tracks.data} />)}
+                    </div>
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <div className="flex flex-wrap items-center justify-between gap-y-4">
+                      {trendingPlaylists?.tracks.data
+                        .slice(16, 32)
+                        .map(data => <MusicItem data={data} tracks={trendingPlaylists?.tracks.data} />)}
+                    </div>
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <div className="flex flex-wrap items-center justify-between gap-y-4">
+                      {trendingPlaylists?.tracks.data
+                        .slice(32, 48)
+                        .map(data => <MusicItem data={data} tracks={trendingPlaylists?.tracks.data} />)}
+                    </div>
+                  </SwiperSlide>
+                </Slider>
               </div>
             </>
           )}
@@ -111,11 +154,16 @@ export default function Home() {
                 caption="Listen to your favorite artists"
                 buttonLabel="More"
                 viewMore
+                swiperRef={artistSlideRef}
               />
-              <div className="mt-6 flex flex-wrap justify-between gap-7">
-                {artists.slice(0, 5).map(data => (
-                  <ArtistCard key={data.id} data={data} />
-                ))}
+              <div className="mt-6">
+                <Slider swiperRef={artistSlideRef} slidesPerView={5} spaceBetween={28}>
+                  {artists.map(data => (
+                    <SwiperSlide key={data.id}>
+                      <ArtistCard data={data} />
+                    </SwiperSlide>
+                  ))}
+                </Slider>
               </div>
             </>
           )}
@@ -151,13 +199,18 @@ export default function Home() {
                 title={featuredAlbums?.title}
                 caption={featuredAlbums?.label}
                 artist={featuredAlbums?.artist}
+                swiperRef={albumSlideRef}
                 buttonLabel="More"
                 viewMore
               />
               <div className="mt-6 flex justify-between gap-x-7">
-                {featuredAlbums?.tracks.data
-                  .slice(0, 6)
-                  .map(data => <AlbumCard key={data.id} data={data} tracks={featuredAlbums?.tracks.data} />)}
+                <Slider swiperRef={albumSlideRef} slidesPerView={6} spaceBetween={28}>
+                  {featuredAlbums?.tracks.data.map(data => (
+                    <SwiperSlide key={data.id}>
+                      <AlbumCard data={data} tracks={featuredAlbums?.tracks.data} />
+                    </SwiperSlide>
+                  ))}
+                </Slider>
               </div>
             </>
           )}

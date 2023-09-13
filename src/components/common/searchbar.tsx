@@ -8,9 +8,10 @@ import { ScrollArea } from '../ui/scroll-area';
 import ApiRequest from '@/api';
 import useDebounce from '@/lib/hooks/useDebounce';
 import { PlaylistItemType } from '@/types/shared';
+import { useAppSelector } from '@/lib/redux/hooks';
 
 const Searchbar: React.FC = () => {
-  const [focused, setFocused] = useState(false);
+  const { loading: pageLoading } = useAppSelector(state => state.track);
   const [query, setQuery] = useState('');
   const debounceValue = useDebounce(query);
   const [showMenu, setShowMenu] = useState(query.length > 0);
@@ -66,6 +67,7 @@ const Searchbar: React.FC = () => {
             <SearchIcon width={18} height={18} className="text-muted-foreground" />
           </div>
           <Input
+            disabled={pageLoading}
             placeholder="Search for music"
             value={query}
             className={`${
