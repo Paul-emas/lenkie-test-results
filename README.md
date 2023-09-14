@@ -42,7 +42,7 @@ Prettier/Eslint
 Icon - [@radix-ui](https://www.radix-ui.com/icons)
 
 Features
-
+Music Play - Hover on any track and click play to see player
 Homepage dashboard
 Search 
 Artist page
