@@ -10,8 +10,8 @@ const MarshmelloCard = () => {
   const { marshmellowPlaylists } = useAppSelector(state => state.track);
 
   return (
-    <div className="relative h-52">
-      <div className="absolute bottom-7 z-10 w-full px-6">
+    <div className="relative h-44 md:h-52">
+      <div className="absolute bottom-5 z-10 w-full px-6 md:bottom-7">
         <div className="">
           <div className="font-bold text-white">
             <span className="text-2xl font-light">
@@ -25,7 +25,7 @@ const MarshmelloCard = () => {
             onClick={() => play({ data: marshmellowPlaylists[0], tracks: marshmellowPlaylists })}
             title="Listen now"
             variant="outline"
-            className="mt-6 h-12 px-5 font-bold uppercase"
+            className="mt-4 h-12 px-5 font-bold uppercase md:mt-6"
           >
             <PlayCircleIcon className="mr-2" />
             <span>Listen now</span>

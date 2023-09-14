@@ -20,7 +20,7 @@ const ArtistCard = ({ data }: ArtistCardProps) => {
   };
   return (
     <div className="group">
-      <div className="relative h-[180px] w-[180px] overflow-hidden rounded-full">
+      <div className="relative h-32 w-32 overflow-hidden rounded-full md:h-[180px] md:w-[180px]">
         <div className="invisible absolute z-10 flex h-full w-full scale-75 items-center justify-center rounded-full bg-black bg-opacity-20 opacity-0 backdrop-blur-sm duration-200 group-hover:visible group-hover:scale-100 group-hover:opacity-100">
           <PlayIcon onClick={handlePlay} className="h-12 w-12 cursor-pointer fill-primary text-white" />
         </div>
@@ -34,7 +34,9 @@ const ArtistCard = ({ data }: ArtistCardProps) => {
       </div>
       <div className="text-center">
         <Link href={`/artist/${data.id}`}>
-          <div className="mt-3 line-clamp-1 normal-case text-primary hover:underline">{data.name}</div>
+          <div className="mt-2 line-clamp-1 text-sm normal-case text-primary hover:underline md:mt-3 md:text-base">
+            {data.name}
+          </div>
         </Link>
       </div>
     </div>

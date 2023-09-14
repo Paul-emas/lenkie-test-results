@@ -9,11 +9,9 @@ const RbCard = () => {
   const { play } = usePlayMedia();
   const { rbPlaylists } = useAppSelector(state => state.track);
 
-  console.log(rbPlaylists);
-
   return (
-    <div className="relative h-52">
-      <div className="absolute bottom-0 z-10 w-full px-6 pb-2">
+    <div className="relative h-44 md:h-52">
+      <div className="absolute bottom-3 z-10 w-full px-5 pb-2 md:bottom-0 md:px-6">
         <div className="flex items-center justify-between gap-x-6">
           <div className="text-xs font-light text-white">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus perspiciatis adipisicing elit.

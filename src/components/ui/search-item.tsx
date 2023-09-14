@@ -25,8 +25,11 @@ const SearchItem: React.FC<SearchItemProps> = ({ data, tracks, setShowMenu, setQ
   };
 
   return (
-    <Button variant="ghost" className="inline-flex w-full items-center justify-start rounded-none px-4 py-1">
-      <div>
+    <Button
+      variant="ghost"
+      className="inline-flex h-9 w-full items-center justify-start rounded-none px-4 py-1 xl:h-auto"
+    >
+      <div className="hidden xl:block">
         <Button
           title="Play preview"
           size="icon"
@@ -36,13 +39,13 @@ const SearchItem: React.FC<SearchItemProps> = ({ data, tracks, setShowMenu, setQ
           <PlayIcon className="h-5 w-5 fill-white text-black dark:fill-black" />
         </Button>
       </div>
-      <div className="ml-3 w-full text-left">
+      <div className="w-full text-left xl:ml-3">
         <div onClick={closeMenu} className="flex w-full items-center justify-between text-primary">
-          <div onClick={handlePlay} className="line-clamp-1 w-72 cursor-pointer">
+          <div onClick={handlePlay} className="line-clamp-1 w-36 cursor-pointer xl:w-72">
             {data.album.title}
           </div>
           <Link href={`/artist/${data.artist.id}`}>
-            <div className="line-clamp-1 truncate text-xs hover:underline">{data.artist.name}</div>
+            <div className="line-clamp-1 w-20 text-right text-xs hover:underline xl:w-auto">{data.artist.name}</div>
           </Link>
         </div>
       </div>

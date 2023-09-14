@@ -19,7 +19,7 @@ const MusicItem = ({ data, tracks = [], className = '' }: MusicItemProps) => {
   const handlePlay = () => play({ data, tracks });
 
   return (
-    <div className={cn('group/music flex items-center', className)}>
+    <div className={cn('group/music flex w-full items-center md:w-auto', className)}>
       <div className="relative h-[50px] w-[50px] overflow-hidden rounded-sm">
         <div className="invisible absolute inset-0 flex h-full w-full items-center justify-center rounded-sm bg-black bg-opacity-20 opacity-0 duration-200 group-hover/music:visible group-hover/music:opacity-100">
           <Button
@@ -40,15 +40,15 @@ const MusicItem = ({ data, tracks = [], className = '' }: MusicItemProps) => {
         />
       </div>
       <div className="ml-4">
-        <div onClick={handlePlay} className="w-44 cursor-pointer truncate text-sm">
+        <div onClick={handlePlay} className="w-full cursor-pointer truncate text-sm md:w-44">
           {data?.title_short}
         </div>
         <Link href={`/artist/${data?.artist.id}`}>
-          <div className="line-clamp-2 w-32 cursor-pointer truncate text-xs font-light text-accent-foreground hover:underline">
+          <div className="line-clamp-2 w-full cursor-pointer truncate text-xs font-light text-accent-foreground hover:underline md:w-32">
             {data?.artist.name}
           </div>
         </Link>
-        <div className="line-clamp-1 w-44 text-xs font-light text-muted-foreground">{data?.album.title}</div>
+        <div className="line-clamp-1 w-full text-xs font-light text-muted-foreground md:w-44">{data?.album.title}</div>
       </div>
     </div>
   );

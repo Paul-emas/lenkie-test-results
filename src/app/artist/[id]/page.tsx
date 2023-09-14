@@ -86,18 +86,18 @@ export default function ArtistPage() {
   return (
     <AppLayout>
       {loading ? (
-        <div className="mt-40">
+        <div className="mt-32 md:mt-40">
           <div className="mt-4 rounded-3xl border border-input bg-primary-foreground pb-[400px]">
             <div className="relative -top-28">
-              <div className="relative mx-auto h-44 w-44 rounded-full border border-input bg-primary-foreground" />
+              <div className="relative mx-auto h-36 w-36 rounded-full border border-input bg-primary-foreground md:h-44 md:w-44" />
             </div>
           </div>
         </div>
       ) : (
-        <div className="mt-40 pb-40">
-          <div className="mt-4 rounded-3xl border border-input bg-gradient-to-br from-primary-foreground via-primary-foreground to-gray-200 p-5 pb-12 dark:to-gray-800">
+        <div className="mt-32 pb-14 md:mt-40 md:pb-40">
+          <div className="mt-4 rounded-3xl border border-input bg-gradient-to-br from-primary-foreground via-primary-foreground to-gray-200 p-3 pb-12 dark:to-gray-800 md:p-5">
             <div className="relative -top-32">
-              <div className="relative mx-auto h-44 w-44 rounded-full border-[6px] border-primary shadow-2xl">
+              <div className="relative mx-auto h-36 w-36 rounded-full border-[6px] border-primary shadow-2xl md:h-44 md:w-44">
                 <Image
                   src={artistData?.picture_big || ''}
                   fill
@@ -105,10 +105,10 @@ export default function ArtistPage() {
                   className="rounded-full bg-primary-foreground object-cover object-top"
                 />
               </div>
-              <div className="mt-5 text-center">
-                <div className="text-3xl font-bold text-primary">{artistData?.name || ''}</div>
+              <div className="mt-3 text-center md:mt-5">
+                <div className="text-xl font-bold text-primary md:text-3xl">{artistData?.name || ''}</div>
               </div>
-              <div className="mt-5 flex items-center justify-center gap-x-3">
+              <div className="mt-2 flex items-center justify-center gap-x-3 md:mt-5">
                 <Button onClick={handleShufflePlay} title="Shuffle play" variant="outline" className="h-11">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -132,9 +132,9 @@ export default function ArtistPage() {
                 <Button title="Subscribe">Subscribe {numberFormatter(artistData?.nb_fan || 0)}</Button>
               </div>
             </div>
-            <div className="-mt-24 px-6">
+            <div className="-mt-24 px-2 md:px-6">
               <SectionTitle title="Tracks" caption="" />
-              <div className="mt-4">
+              <div className="mt-3md:mt-4">
                 {tracks
                   .slice(0, !showMore ? 5 : tracks.length)
                   ?.map(data => <TrackCard key={data.id} data={data} tracks={tracks} />)}
@@ -148,8 +148,32 @@ export default function ArtistPage() {
               {albums.length > 0 ? (
                 <div className="mt-12">
                   <SectionTitle title="Albums" caption="" swiperRef={albumSlideRef} />
-                  <div className="mt-6">
-                    <Slider swiperRef={albumSlideRef} slidesPerView={6} spaceBetween={28}>
+                  <div className="mt-3 md:mt-6">
+                    <Slider
+                      swiperRef={albumSlideRef}
+                      slidesPerView={2.4}
+                      spaceBetween={28}
+                      breakpoints={{
+                        640: {
+                          slidesPerView: 3.3
+                        },
+                        768: {
+                          slidesPerView: 3.3
+                        },
+                        1024: {
+                          slidesPerView: 4.3
+                        },
+                        992: {
+                          slidesPerView: 5.3
+                        },
+                        1100: {
+                          slidesPerView: 5.3
+                        },
+                        1200: {
+                          slidesPerView: 6.3
+                        }
+                      }}
+                    >
                       {albums?.map(data => (
                         <SwiperSlide key={data.id}>
                           <AlbumCard data={data} tracks={albums} />

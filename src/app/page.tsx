@@ -72,16 +72,36 @@ export default function Home() {
 
   return (
     <AppLayout>
-      <div className="space-y-12 pb-28 pt-7">
+      <div className="pb-14 pt-5 md:space-y-12 md:pb-28 md:pt-7">
         {loading ? (
-          <div className="flex gap-x-7">
-            <BannerSkeleton />
-            <BannerSkeleton />
-            <Skeleton className="h-52 w-40 rounded-l-sm rounded-r-none" />
-          </div>
+          <>
+            <div className="hidden gap-x-7 md:flex">
+              <BannerSkeleton />
+              <BannerSkeleton />
+              <Skeleton className="h-52 w-40 rounded-l-sm rounded-r-none" />
+            </div>
+            <div className="block md:hidden">
+              <BannerSkeleton className="w-full" />
+            </div>
+          </>
         ) : (
-          <div className="col-span-2 w-full">
-            <Slider slidesPerView={2.3} spaceBetween={28} autoplay>
+          <div className="w-full md:col-span-2">
+            <Slider
+              slidesPerView={1}
+              spaceBetween={28}
+              autoplay
+              breakpoints={{
+                640: {
+                  slidesPerView: 1.4
+                },
+                768: {
+                  slidesPerView: 1.9
+                },
+                1024: {
+                  slidesPerView: 2.3
+                }
+              }}
+            >
               <SwiperSlide>
                 <MarshmelloCard />
               </SwiperSlide>
@@ -99,8 +119,15 @@ export default function Home() {
           {loading ? (
             <>
               <SectionTitleSkeleton viewMore />
-              <div className="mt-6 flex items-center justify-between">
+              <div className="mt-6 hidden items-center justify-between md:flex">
                 {Array.from({ length: 4 }).map((_, index) => (
+                  <div className="space-y-4" key={index}>
+                    <MusicItemSkeleton />
+                  </div>
+                ))}
+              </div>
+              <div className="mt-6 flex items-center justify-between md:hidden">
+                {Array.from({ length: 1 }).map((_, index) => (
                   <div className="space-y-4" key={index}>
                     <MusicItemSkeleton />
                   </div>
@@ -119,21 +146,21 @@ export default function Home() {
               <div className="mt-6 justify-between">
                 <Slider swiperRef={trendingPlaylistsSlideRef} slidesPerView={1}>
                   <SwiperSlide>
-                    <div className="flex flex-wrap items-center justify-between gap-y-4">
+                    <div className="flex h-64 flex-wrap items-center justify-between gap-y-4 md:h-auto">
                       {trendingPlaylists?.tracks.data
                         .slice(0, 16)
                         .map(data => <MusicItem key={data.id} data={data} tracks={trendingPlaylists?.tracks.data} />)}
                     </div>
                   </SwiperSlide>
                   <SwiperSlide>
-                    <div className="flex flex-wrap items-center justify-between gap-y-4">
+                    <div className="flex h-64 flex-wrap items-center justify-between gap-y-4 md:h-auto">
                       {trendingPlaylists?.tracks.data
                         .slice(16, 32)
                         .map(data => <MusicItem key={data.id} data={data} tracks={trendingPlaylists?.tracks.data} />)}
                     </div>
                   </SwiperSlide>
                   <SwiperSlide>
-                    <div className="flex flex-wrap items-center justify-between gap-y-4">
+                    <div className="flex h-64 flex-wrap items-center justify-between gap-y-4 md:h-auto">
                       {trendingPlaylists?.tracks.data
                         .slice(32, 48)
                         .map(data => <MusicItem key={data.id} data={data} tracks={trendingPlaylists?.tracks.data} />)}
@@ -148,8 +175,13 @@ export default function Home() {
           {loading && !artists.length ? (
             <>
               <SectionTitleSkeleton viewMore />
-              <div className="mt-6 flex justify-between gap-x-7">
+              <div className="mt-6 hidden justify-between gap-x-7 md:flex">
                 {Array.from({ length: 5 }).map((_, index) => (
+                  <ArtistCardSkeleton key={index} />
+                ))}
+              </div>
+              <div className="mt-6 flex justify-between gap-x-7  md:hidden">
+                {Array.from({ length: 3 }).map((_, index) => (
                   <ArtistCardSkeleton key={index} />
                 ))}
               </div>
@@ -164,7 +196,28 @@ export default function Home() {
                 swiperRef={artistSlideRef}
               />
               <div className="mt-6">
-                <Slider swiperRef={artistSlideRef} slidesPerView={5} spaceBetween={28}>
+                <Slider
+                  swiperRef={artistSlideRef}
+                  slidesPerView={2.5}
+                  spaceBetween={28}
+                  breakpoints={{
+                    640: {
+                      slidesPerView: 3.3
+                    },
+                    768: {
+                      slidesPerView: 3.3
+                    },
+                    1024: {
+                      slidesPerView: 4.3
+                    },
+                    992: {
+                      slidesPerView: 5.3
+                    },
+                    1100: {
+                      slidesPerView: 5.3
+                    }
+                  }}
+                >
                   {artists.map(data => (
                     <SwiperSlide key={data.id}>
                       <ArtistCard data={data} />
@@ -176,7 +229,7 @@ export default function Home() {
           )}
         </div>
 
-        <div className="grid grid-cols-3 gap-x-10">
+        <div className="grid gap-x-10 xl:grid-cols-3">
           {loading ? (
             <>
               {Array.from({ length: 2 }).map((_, index) => (
@@ -210,7 +263,31 @@ export default function Home() {
                 viewMore
               />
               <div className="mt-6 flex justify-between gap-x-7">
-                <Slider swiperRef={albumSlideRef} slidesPerView={6} spaceBetween={28}>
+                <Slider
+                  swiperRef={albumSlideRef}
+                  slidesPerView={2.6}
+                  spaceBetween={28}
+                  breakpoints={{
+                    640: {
+                      slidesPerView: 3.3
+                    },
+                    768: {
+                      slidesPerView: 3.3
+                    },
+                    1024: {
+                      slidesPerView: 4.3
+                    },
+                    992: {
+                      slidesPerView: 5.3
+                    },
+                    1100: {
+                      slidesPerView: 5.3
+                    },
+                    1200: {
+                      slidesPerView: 6.3
+                    }
+                  }}
+                >
                   {albums.map(data => (
                     <SwiperSlide key={data.id}>
                       <AlbumCard data={data} tracks={albums} />

@@ -14,14 +14,16 @@ type AlbumCardProps = {
 const AlbumCard = ({ data, tracks }: AlbumCardProps) => {
   const { play } = usePlayMedia();
 
+  const hanldePlay = () => play({ data, tracks });
+
   return (
     <div className="group">
-      <div className="relative h-40 w-40 overflow-hidden rounded-lg">
+      <div className="relative h-32 w-32 overflow-hidden rounded-lg md:h-40 md:w-40">
         <div className="invisible absolute inset-0 z-10 flex h-full w-full items-end justify-end rounded-sm bg-black bg-opacity-20 p-2 opacity-0 duration-200 group-hover:visible group-hover:opacity-100">
           <Button
             title="Play preview"
             size="icon"
-            onClick={() => play({ data, tracks })}
+            onClick={hanldePlay}
             className="smooth-transition scale-0 rounded-full bg-white hover:bg-gray-100 group-hover:scale-90"
           >
             <PlayIcon className="h-5 w-5 fill-black text-black" />
@@ -35,12 +37,14 @@ const AlbumCard = ({ data, tracks }: AlbumCardProps) => {
         />
       </div>
       <div className="text-left">
+        <div onClick={hanldePlay} className="mt-3 line-clamp-1 text-sm font-semibold capitalize text-primary">
+          {data?.title}
+        </div>
         <Link href={`/artist/${data.artist.id}`}>
-          <div className="mt-3 line-clamp-1 text-sm font-semibold capitalize text-primary hover:underline">
-            {data?.title}
+          <div className="text-xs font-light capitalize text-muted-foreground hover:underline md:text-sm">
+            {data?.artist.name}
           </div>
         </Link>
-        <div className="text-sm font-light text-muted-foreground">{data?.artist.name}</div>
       </div>
     </div>
   );

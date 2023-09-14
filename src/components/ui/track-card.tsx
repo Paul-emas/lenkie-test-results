@@ -15,38 +15,48 @@ const TrackCard = ({ data, tracks }: TrackCardProps) => {
   const { play } = usePlayMedia();
 
   return (
-    <div className="group/music flex items-center justify-between gap-x-6 border-b py-3 last:border-none dark:border-slate-700">
+    <div className="group/music flex items-center justify-between gap-x-6 border-b py-2 last:border-none dark:border-slate-700 md:py-3">
       <div className="flex w-2/4 items-center">
-        <div className="relative h-10 w-10 duration-300">
-          <div className="invisible absolute inset-0 flex h-full w-full items-center justify-center rounded-sm bg-black bg-opacity-20 opacity-0 duration-200 group-hover/music:visible group-hover/music:opacity-100">
-            <Button
-              title="Play preview"
-              size="icon"
-              onClick={() => play({ data, tracks })}
-              className="smooth-transition scale-0 rounded-full bg-white hover:bg-gray-100 group-hover/music:scale-[0.7]"
-            >
-              <PlayIcon className="h-5 w-5 fill-black text-black" />
-            </Button>
-          </div>
-          <Image
-            src={data?.album.cover || ''}
-            alt={`${data?.title} image`}
-            width={40}
-            height={40}
-            className="rounded-md bg-primary-foreground object-cover object-top"
-          />
-        </div>
-        <div className="ml-5 w-52 truncate text-primary">{data?.title_short}</div>
-      </div>
-      <div className="flex w-1/4 items-center text-muted-foreground">
         <div>
-          <Disc2 className="h-5 w-5 fill-muted-foreground text-primary-foreground" />
-        </div>{' '}
-        <span className="ml-2 line-clamp-1">{data.artist.name}</span>
+          <div className="relative h-10 w-10 duration-300">
+            <div className="invisible absolute inset-0 flex h-full w-full items-center justify-center rounded-sm bg-black bg-opacity-20 opacity-0 duration-200 group-hover/music:visible group-hover/music:opacity-100">
+              <Button
+                title="Play preview"
+                size="icon"
+                onClick={() => play({ data, tracks })}
+                className="smooth-transition scale-0 rounded-full bg-white hover:bg-gray-100 group-hover/music:scale-[0.7]"
+              >
+                <PlayIcon className="h-5 w-5 fill-black text-black" />
+              </Button>
+            </div>
+            <Image
+              src={data?.album.cover || ''}
+              alt={`${data?.title} image`}
+              width={40}
+              height={40}
+              className="rounded-md bg-primary-foreground object-cover object-top"
+            />
+          </div>
+        </div>
+        <div className="ml-3">
+          <div className="w-52 truncate text-xs capitalize text-primary md:ml-5 md:text-base">{data?.title_short}</div>
+          <div className="item-center flex">
+            <div className="flex items-center">
+              <Disc2 className="h-5 w-5 fill-muted-foreground text-primary-foreground" />
+              <span className="ml-0.5 line-clamp-1 text-xs capitalize">{data.artist.name}</span>
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="w-2/4 truncate text-muted-foreground">{data?.album.title}</div>
-      <div className="flex items-center justify-end gap-x-8 text-muted-foreground">
-        <div className="flex items-center opacity-0 duration-100 group-hover/music:opacity-100">
+      <div className="hidden w-1/4 items-center text-muted-foreground md:flex">
+        <div>
+          <Disc2 className="h-4 w-4 fill-muted-foreground text-primary-foreground" />
+        </div>{' '}
+        <span className="ml-2 line-clamp-1 capitalize">{data.artist.name}</span>
+      </div>
+      <div className="hidden w-2/4 truncate text-muted-foreground md:block">{data?.album.title}</div>
+      <div className="flex items-center justify-end gap-x-8 text-xs text-muted-foreground md:text-base">
+        <div className="hidden items-center opacity-0 duration-100 group-hover/music:opacity-100 md:flex">
           <Button title="Dislike" size="icon" variant="ghost">
             <svg
               xmlns="http://www.w3.org/2000/svg"

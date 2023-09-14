@@ -34,9 +34,9 @@ const AppLayout = ({ children }: AppLayoutProps) => {
       <Topnav />
       <div className="flex w-full">
         <Sidebar playlists={playlists} />
-        <div className="relative w-[calc(100%-250px)]">
+        <div className="relative w-full xl:w-[calc(100%-250px)]">
           <Player />
-          <main className="container mx-auto px-20 2xl:px-36">{children}</main>
+          <main className="container mx-auto px-4 xl:px-20 2xl:px-36">{children}</main>
         </div>
       </div>
     </div>

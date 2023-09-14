@@ -9,7 +9,7 @@ const PopularTrackCard = () => {
   const { eminemPlaylists } = useAppSelector(state => state.track);
 
   return (
-    <div className="relative rounded-lg border border-input bg-background px-5 py-3">
+    <div className="relative w-[96%] rounded-lg border border-input bg-background px-5 py-3 md:w-full">
       <div className="text-lg font-bold">Top hits by eminem</div>
       <div className="text-sm font-light text-muted-foreground">Best from Eminem</div>
       <div className="group flex w-full items-center justify-between">

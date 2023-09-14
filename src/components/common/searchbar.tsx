@@ -8,10 +8,13 @@ import { ScrollArea } from '../ui/scroll-area';
 import ApiRequest from '@/api';
 import useDebounce from '@/lib/hooks/useDebounce';
 import { PlaylistItemType } from '@/types/shared';
-import { useAppSelector } from '@/lib/redux/hooks';
+import { useAppDispatch, useAppSelector } from '@/lib/redux/hooks';
+import { ArrowLeftIcon } from '@radix-ui/react-icons';
+import { handleOpenSearch } from '@/lib/redux/slices/playerSlice';
 
 const Searchbar: React.FC = () => {
   const { loading: pageLoading } = useAppSelector(state => state.track);
+  const dispatch = useAppDispatch();
   const [query, setQuery] = useState('');
   const debounceValue = useDebounce(query);
   const [showMenu, setShowMenu] = useState(query.length > 0);
@@ -54,6 +57,8 @@ const Searchbar: React.FC = () => {
     e.preventDefault();
   };
 
+  const closeSearch = () => dispatch(handleOpenSearch(false));
+
   return (
     <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} className="relative w-full">
       <form
@@ -64,7 +69,13 @@ const Searchbar: React.FC = () => {
       >
         <div className="flex w-full items-center pl-4 pr-2">
           <div className="pr-2">
-            <SearchIcon width={18} height={18} className="text-muted-foreground" />
+            <SearchIcon width={18} height={18} className="hidden text-muted-foreground xl:block" />
+            <ArrowLeftIcon
+              onClick={closeSearch}
+              width={18}
+              height={18}
+              className="block text-muted-foreground xl:hidden"
+            />
           </div>
           <Input
             disabled={pageLoading}
@@ -72,7 +83,7 @@ const Searchbar: React.FC = () => {
             value={query}
             className={`${
               showMenu ? 'bg-primary-foreground' : 'bg-background'
-            } mr-2 h-[70%] rounded-none border-transparent p-0 text-sm ring-0 ring-offset-0 focus-within:bg-primary-foreground focus-within:ring-offset-primary-foreground focus:border-transparent focus:ring-0 focus-visible:ring-0`}
+            } mr-2 h-[70%] rounded-none border-transparent p-0 text-sm outline-transparent ring-0 ring-offset-0 focus-within:bg-primary-foreground focus-within:ring-offset-primary-foreground focus:border-transparent focus:ring-0 focus-visible:ring-0`}
             onChange={handleQueryChange}
           />
           {loading ? (

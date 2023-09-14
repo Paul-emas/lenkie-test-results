@@ -13,7 +13,7 @@ const PageLoader = () => {
       setTimeout(() => {
         dispatch(handlePageLoading(false));
         window.localStorage.setItem('firstTimeUser', JSON.stringify(true));
-      }, 2000);
+      }, 600);
     } else {
       dispatch(handlePageLoading(false));
     }

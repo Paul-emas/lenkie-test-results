@@ -10,7 +10,7 @@ import {
   ShuffleIcon,
   LoopIcon
 } from '@radix-ui/react-icons';
-import { handleCurrentTrack, handleIsPlaying } from '@/lib/redux/slices/playerSlice';
+import { handleCurrentTrack, handleIsPlaying, handleOpenSidebar } from '@/lib/redux/slices/playerSlice';
 import { useAppDispatch, useAppSelector } from '@/lib/redux/hooks';
 import { formatTime } from '@/lib/utils';
 import Link from 'next/link';
@@ -36,6 +36,7 @@ const Player = () => {
 
   useEffect(() => {
     if (isPlaying) {
+      dispatch(handleOpenSidebar(false));
       audioRef?.current?.play();
     } else {
       audioRef?.current?.pause();
@@ -112,7 +113,9 @@ const Player = () => {
 
   return (
     <div
-      className={`${currentTrack ? 'block' : 'hidden'} fixed bottom-0 right-0 z-50 h-20 w-full border-t border-input`}
+      className={`${
+        currentTrack ? 'block' : 'hidden'
+      } fixed bottom-0 right-0 z-40 h-16 w-full border-t border-input md:h-20`}
     >
       <div className="flex h-full w-full items-center bg-primary-foreground transition-all">
         <audio
@@ -126,12 +129,18 @@ const Player = () => {
         <div className="absolute -top-1 w-full">
           <Slider value={[currentTime]} max={duration} onValueChange={handleProgressChange} />
         </div>
-        <div className="w-full px-4">
-          <div className="grid w-full grid-cols-5">
-            <div className="col-span-1 flex items-center">
-              <div className="flex items-center gap-x-2">
+        <div className="w-full px-2 md:px-4">
+          <div className="grid w-full grid-cols-6 md:grid-cols-5">
+            {isLoadingMetadata ? <div className="col-span-4"></div> : null}
+            <div className="order-last col-span-1 flex items-center md:order-first">
+              <div className="flex items-center md:gap-x-2">
                 <Button title="Previous" disabled={isLoadingMetadata} onClick={prev} size="icon" variant="ghost">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" className="h-7 w-7">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    className="h-6 w-6 md:h-7 md:w-7"
+                  >
                     <path
                       d="M5 18L5 6M19 6V18L9 12L19 6Z"
                       stroke="currentColor"
@@ -141,55 +150,63 @@ const Player = () => {
                     />
                   </svg>
                 </Button>
-                {isLoadingMetadata ? (
-                  <>
-                    <div className="block dark:hidden">
-                      <Image
-                        src="/images/loader.gif"
-                        width={24}
-                        height={24}
-                        alt="Spinner gif"
-                        className="overflow-hidden rounded-full"
-                      />
-                    </div>
-                    <div className="hidden dark:block">
-                      <Image
-                        src="/images/loader-dark.gif"
-                        width={24}
-                        height={24}
-                        alt="Spinner gif"
-                        className="overflow-hidden rounded-full"
-                      />
-                    </div>
-                  </>
-                ) : (
-                  <Button
-                    title="Play/Pause"
-                    disabled={isLoadingMetadata}
-                    onClick={handlePlaying}
-                    size="icon"
-                    variant="ghost"
-                    className="scale-125"
-                  >
-                    {isPlaying ? (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth="1.5"
-                        stroke="currentColor"
-                        className="h-7 w-7"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 5.25v13.5m-7.5-13.5v13.5" />
-                      </svg>
-                    ) : (
-                      <PlayIcon className="h-6 w-6" />
-                    )}
-                  </Button>
-                )}
+                <Button
+                  title="Play/Pause"
+                  disabled={isLoadingMetadata}
+                  onClick={handlePlaying}
+                  size="icon"
+                  variant="ghost"
+                  className="scale-125"
+                >
+                  {isLoadingMetadata ? (
+                    <>
+                      {' '}
+                      <div className="block dark:hidden">
+                        <Image
+                          src="/images/loader.gif"
+                          width={24}
+                          height={24}
+                          alt="Spinner gif"
+                          className="overflow-hidden rounded-full"
+                        />
+                      </div>
+                      <div className="hidden dark:block">
+                        <Image
+                          src="/images/loader-dark.gif"
+                          width={24}
+                          height={24}
+                          alt="Spinner gif"
+                          className="overflow-hidden rounded-full"
+                        />
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      {isPlaying ? (
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="1.5"
+                          stroke="currentColor"
+                          className="h-6 w-6 md:h-7 md:w-7"
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 5.25v13.5m-7.5-13.5v13.5" />
+                        </svg>
+                      ) : (
+                        <PlayIcon className="h-6 w-6" />
+                      )}
+                    </>
+                  )}
+                </Button>
 
                 <Button title="Next" onClick={next} disabled={isLoadingMetadata} size="icon" variant="ghost">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" className="h-7 w-7">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    className="h-6 w-6 md:h-7 md:w-7"
+                  >
                     <path
                       d="M19 6V18M5 18L5 6L15 12L5 18Z"
                       stroke="currentColor"
@@ -200,39 +217,39 @@ const Player = () => {
                   </svg>
                 </Button>
               </div>
-              <div className="ml-3 text-[13px] text-primary">
+              <div className="ml-3 hidden text-[13px] text-primary md:block">
                 {formatTime(timeProgress)} / {formatTime(duration)}
               </div>
             </div>
             {!isLoadingMetadata ? (
               <>
-                {' '}
-                <div className="col-span-3 flex items-center justify-center gap-x-2 px-10">
+                <div className="col-span-4 flex items-center gap-x-2 md:col-span-3 md:justify-center md:px-10">
                   <div className="flex items-center">
-                    <div>
+                    <div className="relative h-12 w-12 md:h-[50px] md:w-[50px]">
                       <Image
                         src={currentTrack?.album.cover || ''}
-                        width={50}
-                        height={50}
                         alt={currentTrack?.title || ''}
+                        fill
                         className="rounded-sm bg-background object-cover object-left-top"
                       />
                     </div>
                     <div className="mx-3">
-                      <div className="text-lg text-primary">{currentTrack?.title}</div>
+                      <div className="line-clamp-1 text-sm text-primary md:text-lg">{currentTrack?.title}</div>
                       <div className="-mt-0.5 flex items-center">
                         <Link href={`/artist/${currentTrack?.artist.id}`}>
-                          <div className="text-sm font-light text-muted-foreground hover:underline">
+                          <div className="line-clamp-1 text-xs font-light text-muted-foreground hover:underline md:text-sm">
                             {currentTrack?.artist.name}
                           </div>
                         </Link>
-                        <div>
+                        <div className="hidden md:block">
                           <div className="mx-2 h-1 w-1 rounded-full bg-muted-foreground"></div>
                         </div>
-                        <div className="text-sm font-light text-muted-foreground">{currentTrack?.album.title}</div>
+                        <div className="line-clamp-1 hidden text-xs font-light text-muted-foreground md:block md:text-sm">
+                          {currentTrack?.album.title}
+                        </div>
                       </div>
                     </div>
-                    <div className="flex items-center">
+                    <div className="hidden items-center md:flex">
                       <Button title="Dislike" disabled={isLoadingMetadata} size="icon" variant="ghost">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -268,7 +285,7 @@ const Player = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-span-1 flex items-center justify-end">
+                <div className="col-span-1 hidden items-center justify-end md:flex">
                   <div className="mr-2 w-20">
                     <Slider value={[volume]} max={100} onValueChange={handleVolumeChange} />
                   </div>

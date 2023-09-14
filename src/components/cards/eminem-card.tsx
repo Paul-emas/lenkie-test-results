@@ -10,7 +10,7 @@ const EminemWrldCard = () => {
   const { play } = usePlayMedia();
 
   return (
-    <div className="col-span-2 mt-3 flex h-80 items-center justify-center rounded-lg border border-input bg-gradient-to-br from-primary-foreground via-primary-foreground to-gray-200 p-5 dark:to-gray-800">
+    <div className="col-span-2 mt-3 hidden h-80 items-center justify-center rounded-lg border border-input bg-gradient-to-br from-primary-foreground via-primary-foreground to-gray-200 p-5 dark:to-gray-800 xl:flex">
       <div className="h-64 w-64 rounded-full">
         <div className="relative h-full w-full overflow-hidden rounded-md">
           <Image
