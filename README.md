@@ -18,8 +18,32 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
+- What you'd do if you had more time
+ - Refactor the player into smaller components
+ - Migrate logic from useState to React context to handle state changes in the player.tsx to prevent re-render on route change
+ - Add some tests using Jest
+ - Setup CI/CD to run the test on code deployment
+ - Setup precommit hooks for commit check before deploying code
+ - Add storybook to document component
 
+- Views
+ - http://localhost:3000/
+ - http://localhost:3000/artist/13
+
+- Tools used
+ -  Next.js (Version 13)
+ - TailwindCss 
+ - shadcn/ui (https://ui.shadcn.com/docs)
+ - Prettier/Eslint
+ - Swiper (https://swiperjs.com/swiper-api)
+ - Icon - @radix-ui (https://www.radix-ui.com/icons)
+
+- Features
+ - Homepage dashboard
+ - Search 
+ - Artist page
+
+## Learn More
 To learn more about Next.js, take a look at the following resources:
 
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
