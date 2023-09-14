@@ -20,6 +20,9 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 
 
 ## Project Info
+[Preview](https://lenkie-test-results.vercel.app/)
+[Artists](https://lenkie-test-results.vercel.app/artist/13)
+
 What you'd do if you had more time:
  - Refactor the player into smaller components
  - Migrate logic from useState to React context to handle state changes in the player.tsx to prevent re-render on route change
