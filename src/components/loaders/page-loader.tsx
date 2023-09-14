@@ -10,6 +10,7 @@ const PageLoader = () => {
   useEffect(() => {
     const firstTimeUser = window.localStorage.getItem('firstTimeUser');
     if (!firstTimeUser) {
+      dispatch(handlePageLoading(true));
       setTimeout(() => {
         dispatch(handlePageLoading(false));
         window.localStorage.setItem('firstTimeUser', JSON.stringify(true));
@@ -17,7 +18,7 @@ const PageLoader = () => {
     } else {
       dispatch(handlePageLoading(false));
     }
-  }, []);
+  }, [window.localStorage.getItem('firstTimeUser')]);
 
   return (
     <div className="fixed inset-0 z-40 flex h-screen w-screen items-center justify-center bg-background">

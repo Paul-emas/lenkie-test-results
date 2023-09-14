@@ -24,7 +24,7 @@ type initialStateTypes = {
 
 const initialState: initialStateTypes = {
   loading: true,
-  pageLoading: true,
+  pageLoading: false,
   trendingPlaylists: null,
   marshmellowPlaylists: [],
   rbPlaylists: [],

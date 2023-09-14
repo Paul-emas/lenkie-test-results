@@ -24,7 +24,7 @@ const Sidebar = ({ className, playlists }: SidebarProps) => {
     <aside
       className={`${
         openSidebar ? 'visible' : 'invisible xl:visible'
-      } fixed top-0 z-50 h-screen w-full overflow-hidden xl:sticky xl:top-16 xl:w-auto`}
+      } fixed top-0 z-50 md:z-40 h-screen w-full overflow-hidden xl:sticky xl:top-16 xl:w-auto`}
     >
       <div
         onClick={closeSidebar}
