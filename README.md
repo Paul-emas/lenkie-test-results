@@ -18,6 +18,8 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
+
+## Project Info
 - What you'd do if you had more time
  - Refactor the player into smaller components
  - Migrate logic from useState to React context to handle state changes in the player.tsx to prevent re-render on route change
