@@ -36,7 +36,7 @@ const Topnav = () => {
                 <Searchbar />
               </div>
               {openSearch ? (
-                <div className="fixed inset-0 z-50 block px-4 py-2 xl:hidden">
+                <div className="fixed h-16 inset-0 z-50 block px-4 py-2 xl:hidden outline-white">
                   <Searchbar />
                 </div>
               ) : null}

@@ -225,7 +225,8 @@ const Player = () => {
               <>
                 <div className="col-span-4 flex items-center gap-x-2 md:col-span-3 md:justify-center md:px-10">
                   <div className="flex items-center">
-                    <div className="relative h-12 w-12 md:h-[50px] md:w-[50px]">
+                   <div>
+                   <div className="relative h-12 w-12 md:h-[50px] md:w-[50px]">
                       <Image
                         src={currentTrack?.album.cover || ''}
                         alt={currentTrack?.title || ''}
@@ -233,6 +234,7 @@ const Player = () => {
                         className="rounded-sm bg-background object-cover object-left-top"
                       />
                     </div>
+                   </div>
                     <div className="mx-3">
                       <div className="line-clamp-1 text-sm text-primary md:text-lg">{currentTrack?.title}</div>
                       <div className="-mt-0.5 flex items-center">
