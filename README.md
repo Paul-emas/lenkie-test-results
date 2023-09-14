@@ -29,17 +29,17 @@ What you'd do if you had more time:
  - Add storybook to document component
 
 Views
-[http://localhost:3000](http://localhost:3000/)
-[http://localhost:3000/artist/13](http://localhost:3000/artist/13)
+- [http://localhost:3000](http://localhost:3000/)
+- [http://localhost:3000/artist/13](http://localhost:3000/artist/13)
 
 Tools used
 
-Next.js (Version 13)
-TailwindCss 
-[shadcn/ui](https://ui.shadcn.com/docs)
-Prettier/Eslint
-[Swiper](https://swiperjs.com/swiper-api)
-Icon - [@radix-ui](https://www.radix-ui.com/icons)
+- Next.js (Version 13)
+- TailwindCss 
+- [shadcn/ui](https://ui.shadcn.com/docs)
+- Prettier/Eslint
+- [Swiper](https://swiperjs.com/swiper-api)
+- Icon - [@radix-ui](https://www.radix-ui.com/icons)
 
 Features
 Music Play - Hover on any track and click play to see player
