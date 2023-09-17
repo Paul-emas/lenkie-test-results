@@ -40,7 +40,7 @@ const TrackCard = ({ data, tracks }: TrackCardProps) => {
         </div>
         <div className="ml-3">
           <div className="w-52 truncate text-xs capitalize text-primary md:ml-5 md:text-base">{data?.title_short}</div>
-          <div className="item-center md:flex hidden">
+          <div className="item-center md:hidden flex">
             <div className="flex items-center">
               <Disc2 className="h-5 w-5 fill-muted-foreground text-primary-foreground" />
               <span className="ml-0.5 line-clamp-1 text-xs capitalize">{data.artist.name}</span>
