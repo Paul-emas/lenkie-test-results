@@ -170,7 +170,7 @@ export default function ArtistPage() {
                           slidesPerView: 5.3
                         },
                         1200: {
-                          slidesPerView: 6.3
+                          slidesPerView: 6
                         }
                       }}
                     >
