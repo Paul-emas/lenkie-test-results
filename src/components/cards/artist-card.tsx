@@ -29,7 +29,7 @@ const ArtistCard = ({ data }: ArtistCardProps) => {
           width={180}
           height={180}
           alt={`${data.name} profile image`}
-          className="mx-auto rounded-full object-cover object-left-top duration-200 group-hover:scale-110"
+          className="mx-auto rounded-full bg-primary-foreground object-cover object-left-top duration-200 group-hover:scale-110"
         />
       </div>
       <div className="text-center">
