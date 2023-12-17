@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 import { DM_Sans } from 'next/font/google';
 import Providers from '@/lib/redux/provider';
 import { Analytics } from '@vercel/analytics/react';
+import AppLayout from './app-layout';
 
 const dmSans = DM_Sans({
   display: 'swap',
@@ -22,7 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={dmSans.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Providers>
-            {children}
+            <AppLayout>{children}</AppLayout>
             <Analytics />
           </Providers>
         </ThemeProvider>

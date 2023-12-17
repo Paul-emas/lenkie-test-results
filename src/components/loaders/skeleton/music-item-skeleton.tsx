@@ -7,7 +7,7 @@ type MusicItemSkeletonProps = { className?: string };
 const MusicItemSkeleton = ({ className }: MusicItemSkeletonProps) => {
   return (
     <Fragment>
-      {[...Array(4)].map(id => (
+      {/* {[...Array(4)].map(id => (
         <div key={id} className={cn('flex items-center', className)}>
           <Skeleton className="h-[50px] w-[50px] rounded-md" />
           <div className="ml-4">
@@ -15,7 +15,7 @@ const MusicItemSkeleton = ({ className }: MusicItemSkeletonProps) => {
             <Skeleton className="mt-2 h-3 w-44" />
           </div>
         </div>
-      ))}
+      ))} */}
     </Fragment>
   );
 };

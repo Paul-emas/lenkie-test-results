@@ -14,7 +14,9 @@ type AlbumCardProps = {
 const AlbumCard = ({ data, tracks }: AlbumCardProps) => {
   const { play } = usePlayMedia();
 
-  const hanldePlay = () => play({ data, tracks });
+  const filterTrack = tracks.filter(track => track?.album?.id === data?.album?.id);
+
+  const handlePlay = () => play({ data, tracks: filterTrack });
 
   return (
     <div className="group">
@@ -23,7 +25,7 @@ const AlbumCard = ({ data, tracks }: AlbumCardProps) => {
           <Button
             title="Play preview"
             size="icon"
-            onClick={hanldePlay}
+            onClick={handlePlay}
             className="smooth-transition scale-0 rounded-full bg-white hover:bg-gray-100 group-hover:scale-90"
           >
             <PlayIcon className="h-5 w-5 fill-black text-black" />
@@ -37,7 +39,7 @@ const AlbumCard = ({ data, tracks }: AlbumCardProps) => {
         />
       </div>
       <div className="text-left">
-        <div onClick={hanldePlay} className="mt-3 line-clamp-1 text-sm font-semibold capitalize text-primary">
+        <div onClick={handlePlay} className="mt-3 line-clamp-1 text-sm font-semibold capitalize text-primary">
           {data?.title}
         </div>
         <Link href={`/artist/${data.artist.id}`}>

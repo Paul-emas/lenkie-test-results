@@ -30,7 +30,7 @@ import {
 } from '@/components/loaders/skeleton';
 
 import SectionTitle from '@/components/common/section-title';
-import AppLayout from '@/components/layouts/app-layout';
+// import AppLayout from '@/app/app-layout';
 import MusicItem from '@/components/ui/music-item';
 import { Skeleton } from '@/components/ui/skeleton';
 import { SwiperSlide } from 'swiper/react';
@@ -71,7 +71,7 @@ export default function Home() {
   }, [poularPlaylists, featuredAlbums]);
 
   return (
-    <AppLayout>
+    <div>
       <div className="pb-14 pt-5 md:space-y-12 md:pb-28 md:pt-7">
         {loading ? (
           <>
@@ -299,6 +299,6 @@ export default function Home() {
           )}
         </div>
       </div>
-    </AppLayout>
+    </div>
   );
 }

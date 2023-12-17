@@ -17,7 +17,7 @@ const Topnav = () => {
   const openSidebar = () => dispatch(handleOpenSidebar(true));
 
   return (
-    <header className="sticky top-0 z-20 flex h-16 w-full items-center border-b border-input bg-background">
+    <header className="sticky top-0 z-40 flex h-16 w-full items-center border-b border-input bg-background">
       <div className="flex items-center pl-4 xl:w-[250px] xl:pl-6">
         <div className="block md:hidden">
           <Button onClick={openSidebar} variant="ghost" size="icon">
@@ -36,7 +36,7 @@ const Topnav = () => {
                 <Searchbar />
               </div>
               {openSearch ? (
-                <div className="fixed h-16 inset-0 z-50 block px-4 py-2 xl:hidden outline-white">
+                <div className="fixed inset-0 z-50 block h-16 px-4 py-2 outline-white xl:hidden">
                   <Searchbar />
                 </div>
               ) : null}

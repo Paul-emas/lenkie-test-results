@@ -5,7 +5,7 @@ import { useParams } from 'next/navigation';
 import ApiRequest from '@/api';
 import { AlbumCard } from '@/components/cards';
 import SectionTitle from '@/components/common/section-title';
-import AppLayout from '@/components/layouts/app-layout';
+// import AppLayout from '@/app/app-layout';
 import { Button } from '@/components/ui/button';
 import TrackCard from '@/components/ui/track-card';
 import usePlayMedia from '@/lib/hooks/usePlayMedia';
@@ -84,10 +84,10 @@ export default function ArtistPage() {
   };
 
   return (
-    <AppLayout>
+    <div>
       {loading ? (
         <div className="mt-32 md:mt-40">
-          <div className="mt-4 rounded-3xl border border-input bg-primary-foreground pb-[400px]">
+          <div className="mt-4 rounded-3xl border border-input bg-primary-foreground pb-[700px]">
             <div className="relative -top-28">
               <div className="relative mx-auto h-36 w-36 rounded-full border border-input bg-primary-foreground md:h-44 md:w-44" />
             </div>
@@ -136,7 +136,7 @@ export default function ArtistPage() {
               <SectionTitle title="Tracks" caption="" />
               <div className="mt-3md:mt-4">
                 {tracks
-                  .slice(0, !showMore ? 5 : tracks.length)
+                  ?.slice(0, !showMore ? 5 : tracks.length)
                   ?.map(data => <TrackCard key={data.id} data={data} tracks={tracks} />)}
               </div>
               {!showMore ? (
@@ -145,7 +145,7 @@ export default function ArtistPage() {
                 </Button>
               ) : null}
 
-              {albums.length > 0 ? (
+              {albums?.length > 0 ? (
                 <div className="mt-12">
                   <SectionTitle title="Albums" caption="" swiperRef={albumSlideRef} />
                   <div className="mt-3 md:mt-6">
@@ -187,6 +187,6 @@ export default function ArtistPage() {
           </div>
         </div>
       )}
-    </AppLayout>
+    </div>
   );
 }

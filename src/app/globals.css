@@ -53,6 +53,10 @@ body {
   background: var(--background);
 }
 
+.ease-transition {
+  transition: transform 0.6s cubic-bezier(0.83, 0, 0.17, 1);
+}
+
 .smooth-transition {
   transition: 0.3s cubic-bezier(0.83, 0, 0.17, 1);
 }

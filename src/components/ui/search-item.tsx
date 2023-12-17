@@ -30,13 +30,14 @@ const SearchItem: React.FC<SearchItemProps> = ({ data, tracks, setShowMenu, setQ
       className="inline-flex h-9 w-full items-center justify-start rounded-none px-4 py-1 xl:h-auto"
     >
       <div className="hidden xl:block">
-        <Button
-          title="Play preview"
-          size="icon"
-          onClick={handlePlay}
-          className="scale-75 rounded-full bg-primary dark:bg-white dark:hover:bg-gray-100"
-        >
-          <PlayIcon className="h-5 w-5 fill-white text-black dark:fill-black" />
+        <Button title="Play preview" size="default" variant="ghost" onClick={handlePlay} className="m-0 p-0 py-0">
+          <Image
+            src={data?.album.cover_xl || ''}
+            alt={data?.title || ''}
+            width={40}
+            height={40}
+            className="rounded-sm bg-background object-cover object-left-top"
+          />
         </Button>
       </div>
       <div className="w-full text-left xl:ml-3">

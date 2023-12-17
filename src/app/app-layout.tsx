@@ -1,9 +1,10 @@
+'use client';
 import React from 'react';
-import Topnav from '../common/topnav';
-import Sidebar from '../common/sidebar';
-import Player from '../player';
+import Topnav from '../components/common/topnav';
+import Sidebar from '../components/common/sidebar';
+import Player from '../components/player';
 import { useAppSelector } from '@/lib/redux/hooks';
-import PageLoader from '../loaders/page-loader';
+import PageLoader from '../components/loaders/page-loader';
 
 type AppLayoutProps = {
   children: React.ReactNode;
