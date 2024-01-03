@@ -55,6 +55,7 @@ const ArtistCard = ({ data }: ArtistCardProps) => {
   };
 
   const handlePlay = async () => {
+    // console.log(data);
     try {
       setArtistTracks([]);
       const track = findTrack();

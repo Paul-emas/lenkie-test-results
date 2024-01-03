@@ -30,7 +30,6 @@ import {
 } from '@/components/loaders/skeleton';
 
 import SectionTitle from '@/components/common/section-title';
-// import AppLayout from '@/app/app-layout';
 import MusicItem from '@/components/ui/music-item';
 import { Skeleton } from '@/components/ui/skeleton';
 import { SwiperSlide } from 'swiper/react';

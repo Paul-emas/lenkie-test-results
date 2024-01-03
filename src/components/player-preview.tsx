@@ -37,9 +37,9 @@ const PlayerPreview = ({ show = false }: PlayerPreviewProps) => {
         show ? 'ease-transition translate-y-0' : 'smooth-transition translate-y-[150%]'
       } fixed right-0 z-20 h-[calc(100vh-140px)] w-[calc(100%-230px)] bg-background md:w-[calc(100%-250px)]`}
     >
-      <div className="grid h-full grid-cols-3">
-        <div className="col-span-2 flex items-center justify-center border-r border-input">
-          <div className="relative h-[80%] w-[75%] rounded-xl border border-input">
+      <div className="3xl:grid-cols-4 grid h-full grid-cols-3">
+        <div className="3xl:col-span-3 col-span-2 flex items-center justify-center border-r border-input">
+          <div className="3xl:h-[800px] 3xl:w-[800px] relative h-[80%] w-[75%] rounded-xl border border-input">
             <Image
               src={currentTrack?.album.cover_xl || ''}
               alt={currentTrack?.title || ''}
