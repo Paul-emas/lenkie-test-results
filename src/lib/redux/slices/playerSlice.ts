@@ -11,6 +11,7 @@ type initialStateTypes = {
   timeProgress: number;
   volume: number;
   duration: number;
+  repeatTrack: boolean;
   currentTrack: PlaylistItemType | null;
   playerTracks: PlaylistItemType[] | [];
 };
@@ -26,6 +27,7 @@ const initialState: initialStateTypes = {
   duration: 0,
   volume: 100,
   playerTracks: [],
+  repeatTrack: false,
   currentTrack: null
 } as any;
 
@@ -33,6 +35,7 @@ const playerSlice = createSlice({
   name: 'player',
   initialState,
   reducers: {
+    handleRepeatTrack: (state, action) => void (state.repeatTrack = action.payload),
     handleIsLoadingMetadata: (state, action) => void (state.isLoadingMetadata = action.payload),
     handleMuteVolume: (state, action) => void (state.muteVolume = action.payload),
     handleVolume: (state, action) => void (state.volume = action.payload),
@@ -48,6 +51,7 @@ const playerSlice = createSlice({
 });
 
 export const {
+  handleRepeatTrack,
   handleIsPlaying,
   handleCurrentTime,
   handleTimeProgress,

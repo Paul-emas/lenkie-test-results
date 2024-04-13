@@ -35,11 +35,11 @@ const PlayerPreview = ({ show = false }: PlayerPreviewProps) => {
     <div
       className={`${
         show ? 'ease-transition translate-y-0' : 'smooth-transition translate-y-[150%]'
-      } fixed right-0 z-20 h-[calc(100vh-140px)] w-[calc(100%-230px)] bg-background md:w-[calc(100%-250px)]`}
+      } fixed right-0 z-20 h-[calc(100vh-120px)]  w-full bg-background sm:h-[calc(100vh-140px)] lg:w-[calc(100%-230px)] lg:w-[calc(100%-250px)]`}
     >
-      <div className="3xl:grid-cols-4 grid h-full grid-cols-3">
-        <div className="3xl:col-span-3 col-span-2 flex items-center justify-center border-r border-input">
-          <div className="3xl:h-[800px] 3xl:w-[800px] relative h-[80%] w-[75%] rounded-xl border border-input">
+      <div className="h-full grid-cols-3 lg:grid">
+        <div className="flex items-center justify-center border-r border-input lg:col-span-2">
+          <div className="relative mt-5 h-[300px] w-[300px] rounded-xl border border-input sm:mt-0 lg:h-[80%] lg:w-[75%] 2xl:h-[600px] 2xl:w-[600px]">
             <Image
               src={currentTrack?.album.cover_xl || ''}
               alt={currentTrack?.title || ''}

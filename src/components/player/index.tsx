@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 import Image from 'next/image';
-import { Slider } from './ui/slider';
+import { Slider } from '../ui/slider';
 import {
   SpeakerLoudIcon,
   SpeakerModerateIcon,
@@ -11,6 +11,7 @@ import {
   LoopIcon
 } from '@radix-ui/react-icons';
 import {
+  handleRepeatTrack,
   handleCurrentTime,
   handleCurrentTrack,
   handleDuration,
@@ -24,13 +25,14 @@ import {
 import { useAppDispatch, useAppSelector } from '@/lib/redux/hooks';
 import { formatTime } from '@/lib/utils';
 import Link from 'next/link';
-import PlayerPreview from './player-preview';
+import PlayerPreview from '../player-preview';
 import { usePathname } from 'next/navigation';
 
 const Player = () => {
   const dispatch = useAppDispatch();
   const pathname = usePathname();
   const {
+    repeatTrack,
     isPlaying,
     timeProgress,
     currentTrack,
@@ -87,6 +89,10 @@ const Player = () => {
     }
   };
 
+  const handleRepeat = () => {
+    dispatch(handleRepeatTrack(!repeatTrack));
+  };
+
   const prev = () => {
     if (currentTrack) {
       dispatch(handleIsLoadingMetadata(true));
@@ -105,7 +111,17 @@ const Player = () => {
     if (currentTrack) {
       dispatch(handleIsPlaying(false));
       const index = tracks.findIndex(tracks => tracks.id == currentTrack.id);
-      if (index !== tracks.length - 1) next();
+
+      if (index !== tracks.length - 1) {
+        if (repeatTrack) {
+          if (audioRef.current) {
+            audioRef.current.currentTime = 0;
+          }
+          dispatch(handleIsPlaying(true));
+        } else {
+          next();
+        }
+      }
     }
   };
 
@@ -132,7 +148,10 @@ const Player = () => {
 
   const handleVolumeChange = (value: number[]) => dispatch(handleVolume(value[0]));
 
-  const handleMute = () => dispatch(handleMuteVolume(!muteVolume));
+  const handleMute = () => {
+    dispatch(handleMuteVolume(!muteVolume));
+    muteVolume ? dispatch(handleVolume(100)) : dispatch(handleVolume(0));
+  };
 
   const handleShufflePlay = () => {
     dispatch(handleIsPlaying(true));
@@ -351,7 +370,13 @@ const Player = () => {
                         <SpeakerLoudIcon className="h-[18px] w-[18px]" />
                       )}
                     </Button>
-                    <Button title="Loop" disabled={isLoadingMetadata} size="icon" variant="ghost">
+                    <Button
+                      onClick={handleRepeat}
+                      title="Loop"
+                      disabled={isLoadingMetadata}
+                      size="icon"
+                      variant="ghost"
+                    >
                       <LoopIcon className="h-[18px] w-[18px]" />
                     </Button>
                     <Button
