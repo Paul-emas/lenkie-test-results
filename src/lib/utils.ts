@@ -27,7 +27,7 @@ export const formatTime = (time: number) => {
   return '00:00';
 };
 
-export const getBaseUrl = () => `${process.env.NEXT_PUBLIC_PROXY}/?${process.env.NEXT_PUBLIC_BASE_URL}`;
+export const getBaseUrl = () => process.env.NEXT_PUBLIC_BASE_URL;
 
 export const getPath = (path: string = ''): string => (path ? `/${path}` : '');
 

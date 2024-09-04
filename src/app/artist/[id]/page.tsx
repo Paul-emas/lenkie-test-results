@@ -25,7 +25,7 @@ const fetchArtist = async (id: string | string[], dispatch: AppDispatch) => {
       const artistData = response.data;
 
       if (artistData.tracklist) {
-        const tracksResponse = await ApiRequest.get(`${process.env.NEXT_PUBLIC_PROXY}/?${artistData.tracklist}`)({});
+        const tracksResponse = await ApiRequest.get(`${artistData.tracklist}`)({});
         if (tracksResponse.status === 200) {
           dispatch(handleLoading(false));
           if (tracksResponse.data.data.length > 0) {

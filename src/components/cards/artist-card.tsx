@@ -34,7 +34,7 @@ const ArtistCard = ({ data }: ArtistCardProps) => {
       if (response.status === 200) {
         const artistData = response.data;
         if (artistData.tracklist) {
-          const tracksResponse = await ApiRequest.get(`${process.env.NEXT_PUBLIC_PROXY}/?${artistData.tracklist}`)({});
+          const tracksResponse = await ApiRequest.get(`/?${artistData.tracklist}`)({});
           if (tracksResponse.status === 200) {
             if (tracksResponse.data.data.length > 0) {
               setArtistTracks(tracksResponse.data.data);
