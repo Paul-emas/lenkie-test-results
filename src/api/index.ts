@@ -14,6 +14,9 @@ interface RequestPayloadTypes {
 }
 
 export const apiInstance = axios.create({
+  headers: {
+    'x-cors-api-key': 'temp_9c6ad91aac3aa2a586fb01868f196cbd'
+  },
   baseURL: getBaseUrl(),
   timeout: 10000,
   validateStatus: (status: number) => status >= 200 && status < 300
