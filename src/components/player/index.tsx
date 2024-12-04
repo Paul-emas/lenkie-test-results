@@ -27,6 +27,7 @@ import { formatTime } from '@/lib/utils';
 import Link from 'next/link';
 import PlayerPreview from '../player-preview';
 import { usePathname } from 'next/navigation';
+import { ChevronDown } from 'lucide-react';
 
 const Player = () => {
   const dispatch = useAppDispatch();
@@ -182,9 +183,9 @@ const Player = () => {
             <Slider value={[currentTime]} max={duration} onValueChange={handleProgressChange} />
           </div>
           <div className="w-full px-2 md:px-4">
-            <div className="grid w-full grid-cols-6 md:grid-cols-5">
+            <div className="flex w-full sm:grid-cols-6 md:grid-cols-5 lg:grid">
               {isLoadingMetadata ? <div className="col-span-4"></div> : null}
-              <div className="order-last col-span-1 flex items-center md:order-first">
+              <div className="order-last col-span-1 ml-auto flex items-center md:order-first lg:ml-0">
                 <div className="flex items-center md:gap-x-2">
                   <Button title="Previous" disabled={isLoadingMetadata} onClick={prev} size="icon" variant="ghost">
                     <svg
@@ -278,18 +279,20 @@ const Player = () => {
                     </svg>
                   </Button>
                 </div>
-                <div className="ml-3 hidden text-[13px] text-primary md:block">
+                <div className="ml-3 hidden text-[13px] text-primary xl:block">
                   {formatTime(timeProgress)} / {formatTime(duration)}
                 </div>
               </div>
               {!isLoadingMetadata ? (
                 <>
-                  <div
-                    onClick={toggleShowPreview}
-                    className="col-span-4 flex items-center gap-x-2 md:col-span-3 md:justify-center md:px-10"
-                  >
+                  <div className="col-span-4 flex items-center gap-x-2 md:col-span-3 md:justify-center md:px-10">
                     <div className="flex items-center">
-                      <div>
+                      <div className="block lg:hidden">
+                        <Button onClick={toggleShowPreview} variant="ghost" size="icon">
+                          <ChevronDown className={showPreview ? 'rotate-[180deg] duration-200' : 'duration-200'} />
+                        </Button>
+                      </div>
+                      <div className="ml-2">
                         <div className="relative h-12 w-12 md:h-[50px] md:w-[50px]">
                           <Image
                             src={currentTrack?.album.cover || ''}
@@ -388,6 +391,11 @@ const Player = () => {
                     >
                       <ShuffleIcon className="h-[18px] w-[18px]" />
                     </Button>
+                    <div className="hidden lg:block">
+                      <Button onClick={toggleShowPreview} variant="ghost" size="icon">
+                        <ChevronDown className={showPreview ? 'rotate-[180deg] duration-200' : 'duration-200'} />
+                      </Button>
+                    </div>
                   </div>
                 </>
               ) : null}
